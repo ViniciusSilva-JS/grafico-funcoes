@@ -40,7 +40,7 @@ A página é dividida em caixas (`div`):
 ## Integrantes
 
 - Vinicius
-- (adicione os colegas aqui)
+- (salviano)
 ```
 
 Depois de colar, salva, faz o commit e o push. No GitHub, o README aparece formatado bonitinho na página do repositório. Só falta colocar os nomes dos colegas no final.
