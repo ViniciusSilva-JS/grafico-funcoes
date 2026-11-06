@@ -40,7 +40,21 @@ A página é dividida em caixas (`div`):
 ## Integrantes
 
 - Vinicius
-- (adicione os colegas aqui)
-```
+- (salviano)
+
+
+## Estilização (CSS)
+
+O arquivo CSS é responsável pela aparência e organização visual da página. Nele serão feitos:
+
+- **Layout geral:** divisão da página em duas áreas, com os controles empilhados à esquerda e o gráfico à direita.
+- **Painel de controles:** estilização do seletor de tipo de função, dos campos de entrada dos coeficientes (a, b e c) e do botão de gerar gráfico, com espaçamento e alinhamento uniformes.
+- **Área do gráfico:** definição do tamanho, bordas e centralização do espaço onde o gráfico é desenhado.
+- **Cores e tipografia:** escolha da paleta de cores e das fontes, garantindo boa leitura e contraste.
+- **Interatividade visual:** efeitos de foco nos campos e de passar o mouse (hover) no botão, para indicar ao usuário onde ele está interagindo.
+- **Responsividade:** adaptação do layout para telas menores, empilhando os controles acima do gráfico em celulares.
+
+**Responsável:** jonh
+
 
 Depois de colar, salva, faz o commit e o push. No GitHub, o README aparece formatado bonitinho na página do repositório. Só falta colocar os nomes dos colegas no final.
