@@ -11,7 +11,7 @@ Trabalho em grupo para mostrar visualmente como funcionam os gráficos das funç
 - **Linear:** y = ax
 - **Afim:** y = ax + b
 - **Quadrática:** y = ax² + bx + c
-- **Exponencial:** y = a · 2ˣ
+- **Exponencial:** y = a · 2
 
 ## Estrutura do HTML
 
