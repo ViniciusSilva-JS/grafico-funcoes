@@ -41,7 +41,7 @@ A página é dividida em caixas (`div`):
 
 - Vinicius
 - (salviano)
-
+- Riquelme
 
 ## Estilização (CSS)
 
