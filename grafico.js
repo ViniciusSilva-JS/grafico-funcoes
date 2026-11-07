@@ -1,4 +1,3 @@
-
 let grafico = null;
 
 function desenharGrafico(pontos, nomeFuncao) {
@@ -37,7 +36,8 @@ function desenharGrafico(pontos, nomeFuncao) {
         options: {
 
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
+            aspectRatio: 1.5,
             parsing: false,
 
             interaction: {
@@ -85,7 +85,9 @@ function desenharGrafico(pontos, nomeFuncao) {
                     },
 
                     grid: {
-                        color: "#e2e8f0"
+                        // linha do zero mais escura (eixos do plano cartesiano)
+                        color: (ctx) => ctx.tick.value === 0 ? "#000000" : "#e2e8f0",
+                        lineWidth: (ctx) => ctx.tick.value === 0 ? 2 : 1
                     },
 
                     ticks: {
@@ -105,7 +107,9 @@ function desenharGrafico(pontos, nomeFuncao) {
                     },
 
                     grid: {
-                        color: "#e2e8f0"
+                        // linha do zero mais escura (eixos do plano cartesiano)
+                        color: (ctx) => ctx.tick.value === 0 ? "#000000" : "#e2e8f0",
+                        lineWidth: (ctx) => ctx.tick.value === 0 ? 2 : 1
                     },
 
                     ticks: {
