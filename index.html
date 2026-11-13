@@ -7,11 +7,25 @@
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-    <h1>Gerador de gráfico de Funções</h1>
+    <!-- Menu de escolha do módulo (canto superior direito) -->
+    <div id="menu-modulo">
+        <label for="modulo">Escolha o conteúdo:</label>
+        <select id="modulo">
+            <option value="funcoes">Funções</option>
+            <option value="limites">Limites</option>
+            <option value="derivadas">Derivadas</option>
+            <option value="integrais">Integrais</option>
+        </select>
+    </div>
 
-    <div id="container">
+    <h1 id="titulo">Gerador de gráfico de Funções</h1>
 
-        <div id="controles">
+    <!-- =====================================================
+         MÓDULO 1 — FUNÇÕES (aparece ao abrir a página)
+         ===================================================== -->
+    <div id="modulo-funcoes" class="container modulo">
+
+        <div id="controles" class="controles">
             <label for="tipo">Selecione uma função:</label>
             <select id="tipo">
                 <option value="constante">Função Constante</option>
@@ -21,35 +35,34 @@
                 <option value="exponencial">Função Exponencial</option>
             </select>
 
-            <div id="campo-a">
+            <div id="campo-a" class="campo">
                 <label for="a">Valor de a:</label>
                 <input type="number" id="a" value="1" step="0.5">
             </div>
 
-            <div id="campo-b">
+            <div id="campo-b" class="campo">
                 <label for="b">Valor de b:</label>
                 <input type="number" id="b" value="0" step="0.5">
             </div>
 
-            <div id="campo-c">
+            <div id="campo-c" class="campo">
                 <label for="c">Valor de c:</label>
                 <input type="number" id="c" value="0" step="0.5">
             </div>
 
-            <button id="gerar">Gerar Gráfico</button>
+            <button id="gerar" class="botao">Gerar Gráfico</button>
         </div>
 
-        <div id="grafico-container">
+        <div id="grafico-container" class="grafico-container">
 
             <!-- PARTE 1: tipo + fórmula -->
-            <div id="cabecalho-funcao">
+            <div id="cabecalho-funcao" class="cabecalho">
                 <span id="info-tipo"></span>: <span id="info-formula"></span>
             </div>
 
             <!-- PARTE 2: tabela ao lado do gráfico -->
-            <div id="area-principal">
-
-                <table id="tabela-valores">
+            <div id="area-principal" class="area-principal">
+                <table id="tabela-valores" class="tabela">
                     <thead>
                         <tr>
                             <th>x</th>
@@ -59,19 +72,189 @@
                     <tbody id="corpo-tabela"></tbody>
                 </table>
 
-                <canvas id="grafico" width="600" height="400"></canvas>
-
+                <div class="area-grafico">
+                    <canvas id="grafico" width="600" height="400"></canvas>
+                </div>
             </div>
 
             <!-- PARTE 3: domínio, imagem e comportamento -->
-            <div id="rodape-funcao">
+            <div id="rodape-funcao" class="rodape">
                 D = <span id="info-dominio"></span>
                 e Im = <span id="info-imagem"></span>
                 | <span id="info-comportamento"></span>
             </div>
+        </div>
+    </div>
 
+    <!-- =====================================================
+         MÓDULO 2 — LIMITES (Aula 2)
+         ===================================================== -->
+    <div id="modulo-limites" class="container modulo" hidden>
+
+        <div class="controles">
+            <div class="campo">
+                <label for="lim-funcao">Função f(x):</label>
+                <input type="text" id="lim-funcao" placeholder="ex: (x^2 - 1)/(x - 1)">
+            </div>
+
+            <div class="campo">
+                <label for="lim-ponto">x tende a:</label>
+                <input type="text" id="lim-ponto" placeholder="ex: 1, inf ou -inf">
+            </div>
+
+            <div class="campo">
+                <label for="lim-tipo">Tipo de limite:</label>
+                <select id="lim-tipo">
+                    <option value="bilateral">Bilateral (dos dois lados)</option>
+                    <option value="esquerda">Lateral à esquerda (x → a⁻)</option>
+                    <option value="direita">Lateral à direita (x → a⁺)</option>
+                </select>
+            </div>
+
+            <button id="lim-calcular" class="botao">Calcular Limite</button>
         </div>
 
+        <div class="grafico-container">
+
+            <!-- PARTE 1: expressão do limite -->
+            <div class="cabecalho">
+                lim <span id="lim-expressao"></span> = <span id="lim-resultado"></span>
+            </div>
+
+            <!-- PARTE 2: tabela de aproximação ao lado do gráfico -->
+            <div class="area-principal">
+                <table id="lim-tabela" class="tabela">
+                    <thead>
+                        <tr>
+                            <th>x</th>
+                            <th>f(x)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lim-corpo-tabela"></tbody>
+                </table>
+
+                <div class="area-grafico">
+                    <canvas id="lim-grafico" width="600" height="400"></canvas>
+                </div>
+            </div>
+
+            <!-- PARTE 3: limites laterais, continuidade e interpretação -->
+            <div class="rodape">
+                <p>Limite à esquerda: <span id="lim-esquerda"></span>
+                   | Limite à direita: <span id="lim-direita"></span></p>
+                <p>Continuidade: <span id="lim-continuidade"></span></p>
+                <p>Interpretação: <span id="lim-interpretacao"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         MÓDULO 3 — DERIVADAS (Aula 3)
+         ===================================================== -->
+    <div id="modulo-derivadas" class="container modulo" hidden>
+
+        <div class="controles">
+            <div class="campo">
+                <label for="der-funcao">Função f(x):</label>
+                <input type="text" id="der-funcao" placeholder="ex: 3x^2 + 2x - 5">
+            </div>
+
+            <div class="campo">
+                <label for="der-ponto">Calcular f'(x) no ponto (opcional):</label>
+                <input type="number" id="der-ponto" step="0.5" placeholder="ex: 2">
+            </div>
+
+            <button id="der-calcular" class="botao">Calcular Derivada</button>
+        </div>
+
+        <div class="grafico-container">
+
+            <!-- PARTE 1: função e derivada -->
+            <div class="cabecalho">
+                f(x) = <span id="der-funcao-exibida"></span>
+                → f'(x) = <span id="der-resultado"></span>
+            </div>
+
+            <!-- PARTE 2: passo a passo ao lado do gráfico (f e f') -->
+            <div class="area-principal">
+                <div class="passos">
+                    <h3>Passo a passo</h3>
+                    <ol id="der-passos"></ol>
+                </div>
+
+                <div class="area-grafico">
+                    <canvas id="der-grafico" width="600" height="400"></canvas>
+                </div>
+            </div>
+
+            <!-- PARTE 3: valor no ponto e regras usadas -->
+            <div class="rodape">
+                <p>f'(<span id="der-ponto-exibido"></span>) = <span id="der-valor-ponto"></span></p>
+                <p>Regras usadas: <span id="der-regras"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         MÓDULO 4 — INTEGRAIS (Aula 4)
+         ===================================================== -->
+    <div id="modulo-integrais" class="container modulo" hidden>
+
+        <div class="controles">
+            <div class="campo">
+                <label for="int-funcao">Função f(x):</label>
+                <input type="text" id="int-funcao" placeholder="ex: 2x + e^x + cos(x)">
+            </div>
+
+            <div class="campo">
+                <label for="int-tipo">Tipo de integral:</label>
+                <select id="int-tipo">
+                    <option value="indefinida">Indefinida</option>
+                    <option value="definida">Definida (de a até b)</option>
+                </select>
+            </div>
+
+            <!-- Só aparece quando a integral for definida -->
+            <div id="int-campo-limites" hidden>
+                <div class="campo">
+                    <label for="int-a">Limite inferior (a):</label>
+                    <input type="number" id="int-a" value="0" step="0.5">
+                </div>
+
+                <div class="campo">
+                    <label for="int-b">Limite superior (b):</label>
+                    <input type="number" id="int-b" value="1" step="0.5">
+                </div>
+            </div>
+
+            <button id="int-calcular" class="botao">Calcular Integral</button>
+        </div>
+
+        <div class="grafico-container">
+
+            <!-- PARTE 1: integral e resultado -->
+            <div class="cabecalho">
+                ∫ <span id="int-funcao-exibida"></span> dx = <span id="int-resultado"></span>
+            </div>
+
+            <!-- PARTE 2: passo a passo ao lado do gráfico (área sob a curva) -->
+            <div class="area-principal">
+                <div class="passos">
+                    <h3>Passo a passo</h3>
+                    <ol id="int-passos"></ol>
+                </div>
+
+                <div class="area-grafico">
+                    <canvas id="int-grafico" width="600" height="400"></canvas>
+                </div>
+            </div>
+
+            <!-- PARTE 3: valor da área e regras usadas -->
+            <div class="rodape">
+                <p>Valor (integral definida): <span id="int-valor"></span></p>
+                <p>Regras usadas: <span id="int-regras"></span></p>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>

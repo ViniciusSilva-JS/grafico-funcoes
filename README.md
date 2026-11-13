@@ -1,60 +1,70 @@
-Fechado! Copia o bloco abaixo e cola no seu `README.md`, no lugar do que está lá:
-
-```markdown
 # Gerador de Gráfico de Funções
 
-Trabalho em grupo para mostrar visualmente como funcionam os gráficos das funções matemáticas. O usuário escolhe uma função, digita os valores de a, b e c, e o gráfico é gerado na tela.
+Site feito em grupo para a disciplina de Cálculo. Ele mostra, de forma visual, como funcionam as funções, os limites, as derivadas e as integrais.
 
-## Funções disponíveis
+## Como usar
 
-- **Constante:** y = b
-- **Linear:** y = ax
-- **Afim:** y = ax + b
-- **Quadrática:** y = ax² + bx + c
-- **Exponencial:** y = a · 2
+1. No canto superior direito, escolha o conteúdo: **Funções**, **Limites**, **Derivadas** ou **Integrais**.
+2. Preencha os campos da esquerda.
+3. Clique no botão para calcular.
+4. O resultado aparece à direita: a fórmula em cima, uma tabela ao lado do gráfico e as conclusões embaixo.
 
-## Estrutura do HTML
+## O que cada conteúdo faz
 
-A página é dividida em caixas (`div`):
+| Conteúdo | O que o usuário informa | O que aparece |
+|---|---|---|
+| **Funções** | O tipo de função e os valores de a, b e c | Fórmula, tabela de valores, gráfico, domínio, imagem e se a função é crescente ou decrescente |
+| **Limites** (Aula 2) | A função e para onde x tende | O valor do limite, os limites pela esquerda e pela direita, se a função é contínua e se o limite existe |
+| **Derivadas** (Aula 3) | A função | A derivada, o passo a passo com as regras usadas e o gráfico da função e da derivada |
+| **Integrais** (Aula 4) | A função e, se for definida, os limites a e b | A integral, o passo a passo com as regras usadas e a área no gráfico |
 
-- **container:** caixa principal, que deixa os controles e o gráfico lado a lado.
-- **controles:** caixa da esquerda, com tudo que o usuário mexe:
-  - **select (tipo):** menu para escolher a função.
-  - **campo-a, campo-b e campo-c:** cada um tem um `label` (o texto) e um `input` (o campo de número). Ficam em `div` separadas para poderem ser mostradas ou escondidas conforme a função.
-  - **botão (gerar):** gera o gráfico.
-- **grafico-container:** caixa da direita, com o `canvas`, o quadro onde o gráfico é desenhado.
-
-## Tecnologias
-
-- **HTML:** estrutura da página
-- **CSS:** visual e posicionamento
-- **JavaScript:** cálculos e desenho do gráfico
-- **Chart.js:** biblioteca de gráficos
+**Funções disponíveis:** constante f(x) = a, linear f(x) = ax, afim f(x) = ax + b, quadrática f(x) = ax² + bx + c e exponencial f(x) = aˣ.
 
 ## Como rodar
 
-1. Clone o repositório: `git clone LINK-DO-REPOSITORIO`
+1. Baixe o projeto: `git clone https://github.com/ViniciusSilva-JS/grafico-funcoes.git`
 2. Abra a pasta no VS Code.
 3. Clique com o botão direito no `index.html` e escolha **Open with Live Server**.
 
+Também funciona abrindo o `index.html` direto no navegador, desde que haja internet para carregar a biblioteca de gráficos.
+
+## Arquivos do projeto
+
+| Arquivo | Para que serve |
+|---|---|
+| `index.html` | A estrutura da página: menu, campos, tabelas e espaço dos gráficos |
+| `estilo.css` | A aparência: cores, tamanhos e posição de cada parte |
+| `script.js` | Lê o que o usuário digitou e faz os cálculos |
+| `grafico.js` | Desenha o gráfico na tela |
+
+Usamos **HTML**, **CSS**, **JavaScript** e a biblioteca **Chart.js** para os gráficos.
+
+## Para quem vai mexer no código
+
+- Cada conteúdo fica numa caixa própria no `index.html`: `modulo-funcoes`, `modulo-limites`, `modulo-derivadas` e `modulo-integrais`.
+- Só uma caixa aparece por vez. As outras ficam escondidas com o atributo `hidden`.
+- Os IDs de cada conteúdo começam com o mesmo prefixo, para facilitar no JavaScript:
+  - Limites: `lim-` (exemplo: `lim-funcao`, `lim-resultado`, `lim-grafico`)
+  - Derivadas: `der-` (exemplo: `der-funcao`, `der-resultado`, `der-grafico`)
+  - Integrais: `int-` (exemplo: `int-funcao`, `int-resultado`, `int-grafico`)
+- O CSS usa classes (`.controles`, `.botao`, `.rodape`...) para que os quatro conteúdos tenham o mesmo visual.
+
+## Andamento
+
+- [x] Estrutura do HTML dos quatro conteúdos
+- [x] Visual (CSS)
+- [x] Gráfico das funções
+- [ ] Tabela, domínio, imagem e comportamento das funções
+- [ ] Menu trocando de conteúdo
+- [ ] Cálculo de limites
+- [ ] Cálculo de derivadas
+- [ ] Cálculo de integrais
+
 ## Integrantes
 
-- Vinicius
-- (salviano)
-- Riquelme
-
-## Estilização (CSS)
-
-O arquivo CSS é responsável pela aparência e organização visual da página. Nele serão feitos:
-
-- **Layout geral:** divisão da página em duas áreas, com os controles empilhados à esquerda e o gráfico à direita.
-- **Painel de controles:** estilização do seletor de tipo de função, dos campos de entrada dos coeficientes (a, b e c) e do botão de gerar gráfico, com espaçamento e alinhamento uniformes.
-- **Área do gráfico:** definição do tamanho, bordas e centralização do espaço onde o gráfico é desenhado.
-- **Cores e tipografia:** escolha da paleta de cores e das fontes, garantindo boa leitura e contraste.
-- **Interatividade visual:** efeitos de foco nos campos e de passar o mouse (hover) no botão, para indicar ao usuário onde ele está interagindo.
-- **Responsividade:** adaptação do layout para telas menores, empilhando os controles acima do gráfico em celulares.
-
-**Responsável:** jonh
-
-
-Depois de colar, salva, faz o commit e o push. No GitHub, o README aparece formatado bonitinho na página do repositório. Só falta colocar os nomes dos colegas no final.
+| Nome | Parte |
+|---|---|
+| Vinicius | HTML |
+| jonh | CSS |
+| (salviano) | |
+| Riquelme | |
