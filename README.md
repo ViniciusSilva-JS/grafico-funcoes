@@ -177,9 +177,6 @@ O grupo usou IA durante o desenvolvimento. Todo código gerado foi revisado e te
 | 5 | Claude Code (Claude Opus 5.5) | Criar as telas de Limites, Derivadas e Integrais | "faça isso" (montar uma área para cada conteúdo) | Quatro módulos no HTML e CSS trocado de IDs para classes | Corrigidos menu por cima do título e gráfico estourando a largura | *(preencher)* |
 | 6 | Claude Code (Claude Opus 5.5) | Documentação | "coloque no readme.md uma documentação mais simples para tanto os outros usuarios do codigo entender como tambem a professora" | README reescrito | — | *(preencher)* |
 | 7 | Claude Code (Claude Opus 5.5) | Dividir as tarefas do grupo | "quero que voce divida o que por exemplo no js tem que fazer no css tem que fazer..." | Lista de tarefas por integrante | Complemento com os pontos que faltavam | *(preencher)* |
-| 8 | Claude Code (Claude Opus 5.5) | Conferir o projeto com o PDF da AP2 | "fazendo isso ja termina o trabalho? pelo pdf que te mandei?" | Lista do que faltava: problema concreto, registro de IA, testes, README completo | Tema escolhido: faturamento de uma empresa | *(preencher)* |
-| 9 | *(preencher)* | Primeira versão do README | *(preencher)* | *(preencher)* | *(preencher)* | *(preencher)* |
-
 > Cada integrante deve adicionar aqui os prompts que usar, com a ferramenta, o objetivo, o texto, o resultado, o que foi ajustado e como conferiu se estava certo.
 
 ## 10. Andamento
@@ -204,5 +201,5 @@ O grupo usou IA durante o desenvolvimento. Todo código gerado foi revisado e te
 |---|---|
 | Vinicius | HTML e documentação |
 | jonh | CSS |
-| (salviano) | |
-| Riquelme | |
+| (salviano) |JS |
+| Riquelme | JS|
