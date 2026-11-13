@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="PT-BR">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,49 +7,75 @@
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-    <h1>
-        Gerador de gráfico de Funções
-    </h1>
-    
-    <div id="container">
-        <div id="controles">
-    <label for="tipo">Selecione uma função:</label>
-    <select id="tipo">
-        <option value="constante">Função Constante</option>
-        <option value="afim">Função Afim</option>
-        <option value="linear">Função linear</option>
-        <option value="quadratica">Função Quadrática</option>
-        <option value="exponencial">Função Exponencial</option>
-    </select>
-    
-    <div id="campo-a">
-        <label for="a">Valor de a:</label>
-        <input type="number" id="a" value="1" step="0.5">
-    </div>
-    
-    <div id="campo-b">
-        <label for="b">Valor de b:</label>
-        <input type="number" id="b" value="0" step="0.5">
-    </div>
-    
-    <div id="campo-c">
-        <label for="c">Valor de c:</label>
-        <input type="number" id="c" value="0" step="0.5">
-    </div>
-    
-        <button id="gerar">Gerar Gráfico</button>
-    </div>
-    
-    <div id="grafico-container">
-        <canvas id="grafico" width="600" height="400"></canvas>
+    <h1>Gerador de gráfico de Funções</h1>
 
-    <div id="info-funcao">
-        <h2>Informações da função</h2>
-        <p><strong>Tipo:</strong> <span id="info-tipo"></span></p>
+    <div id="container">
+
+        <div id="controles">
+            <label for="tipo">Selecione uma função:</label>
+            <select id="tipo">
+                <option value="constante">Função Constante</option>
+                <option value="afim">Função Afim</option>
+                <option value="linear">Função Linear</option>
+                <option value="quadratica">Função Quadrática</option>
+                <option value="exponencial">Função Exponencial</option>
+            </select>
+
+            <div id="campo-a">
+                <label for="a">Valor de a:</label>
+                <input type="number" id="a" value="1" step="0.5">
+            </div>
+
+            <div id="campo-b">
+                <label for="b">Valor de b:</label>
+                <input type="number" id="b" value="0" step="0.5">
+            </div>
+
+            <div id="campo-c">
+                <label for="c">Valor de c:</label>
+                <input type="number" id="c" value="0" step="0.5">
+            </div>
+
+            <button id="gerar">Gerar Gráfico</button>
+        </div>
+
+        <div id="grafico-container">
+
+            <!-- PARTE 1: tipo + fórmula -->
+            <div id="cabecalho-funcao">
+                <span id="info-tipo"></span>: <span id="info-formula"></span>
+            </div>
+
+            <!-- PARTE 2: tabela ao lado do gráfico -->
+            <div id="area-principal">
+
+                <table id="tabela-valores">
+                    <thead>
+                        <tr>
+                            <th>x</th>
+                            <th>y</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela"></tbody>
+                </table>
+
+                <canvas id="grafico" width="600" height="400"></canvas>
+
+            </div>
+
+            <!-- PARTE 3: domínio, imagem e comportamento -->
+            <div id="rodape-funcao">
+                D = <span id="info-dominio"></span>
+                e Im = <span id="info-imagem"></span>
+                | <span id="info-comportamento"></span>
+            </div>
+
+        </div>
+
     </div>
-    </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="grafico.js"></script>
-<script src="script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+    <script src="grafico.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

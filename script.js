@@ -9,19 +9,20 @@ const campoB = document.getElementById("campo-b");
 const campoC = document.getElementById("campo-c");
 
 const funcoes = {
-  constante:   (x, a, b, c) => a,                     // f(x) = a
-  afim:        (x, a, b, c) => a * x + b,             // f(x) = ax + b
-  linear:      (x, a, b, c) => a * x,                 // f(x) = ax
-  quadratica:  (x, a, b, c) => a * x * x + b * x + c, // f(x) = ax² + bx + c
-  exponencial: (x, a, b, c) => Math.pow(a, x)         // f(x) = a^x
+  constante: (x, a, b, c) => a, // f(x) = a
+  afim: (x, a, b, c) => a * x + b, // f(x) = ax + b
+  linear: (x, a, b, c) => a * x, // f(x) = ax
+  quadratica: (x, a, b, c) => a * x * x + b * x + c, // f(x) = ax² + bx + c
+  exponencial: (x, a, b, c) => Math.pow(a, x), // f(x) = a^x
 };
 
 function atualizarCampos() {
   const tipo = selectTipo.value;
 
   campoA.style.display = "block";
-  campoB.style.display = (tipo === "afim" || tipo === "quadratica") ? "block" : "none";
-  campoC.style.display = (tipo === "quadratica") ? "block" : "none";
+  campoB.style.display =
+    tipo === "afim" || tipo === "quadratica" ? "block" : "none";
+  campoC.style.display = tipo === "quadratica" ? "block" : "none";
 }
 
 // Calcula os pontos (x, y) de -10 até 10, de 0.1 em 0.1
@@ -67,4 +68,4 @@ selectTipo.addEventListener("change", atualizarCampos);
 botaoGerar.addEventListener("click", gerarGrafico);
 
 atualizarCampos(); // ajusta os campos ao abrir a página
-gerarGrafico();    // já mostra um gráfico ao abrir a página
+gerarGrafico(); // já mostra um gráfico ao abrir a página
