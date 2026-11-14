@@ -654,3 +654,21 @@ const UI = {
         });
     }
 };
+
+// Valor em reais no formato brasileiro: R$ 1.250 / R$ 2,50
+UI.reais = function (v) {
+    if (!isFinite(v)) return v > 0 ? "R$ +∞" : (v < 0 ? "−∞" : "indefinido");
+    const s = Math.abs(v).toLocaleString("pt-BR", { maximumFractionDigits: 2 });
+    return (v < 0 ? "−R$ " : "R$ ") + s;
+};
+
+// Preenche o quadro "Exemplo do dia a dia". Cada item vira um parágrafo.
+// Use **texto** para destacar números.
+UI.exemplo = function (id, paragrafos) {
+    const el = document.getElementById(id);
+    if (!paragrafos || !paragrafos.length) { el.innerHTML = "—"; return; }
+    const html = paragrafos.map(p =>
+        "<p>" + UI.escapar(p).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>") + "</p>"
+    ).join("");
+    el.innerHTML = html;
+};

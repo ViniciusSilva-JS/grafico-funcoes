@@ -213,7 +213,62 @@ const Derivadas = (function () {
             UI.texto("der-valor-ponto", fmt(v, 6) + interpretacao);
         }
 
+        UI.exemplo("der-exemplo", exemploDerivada(f, df, ponto, criticos));
         desenhar(f, df, ponto, criticos);
+    }
+
+    // Situação real de faturamento que explica o que o gráfico mostra
+    function exemploDerivada(f, df, ponto, criticos) {
+        const R = UI.reais;
+        const fmt = Expr.formatarNumero;
+        const textos = [
+            "Imagine uma fábrica de camisetas. f(x) é quanto ela fatura vendendo x camisetas, e f'(x) é o **faturamento marginal**: " +
+            "quanto entra a mais vendendo **uma camiseta extra**."
+        ];
+
+        if (!temX(df) && avaliar(df, 0) === 0) {
+            textos.push("Aqui f'(x) = 0 sempre: é como uma assinatura fixa. Vender mais não muda nada no faturamento, " +
+                "por isso o gráfico de f é uma reta deitada.");
+            return textos;
+        }
+        if (!temX(df)) {
+            textos.push(`Aqui f'(x) é sempre **${fmt(avaliar(df, 0), 4)}**: cada camiseta a mais rende sempre o mesmo valor ` +
+                `(${R(avaliar(df, 0))}), por isso f é uma reta.`);
+            return textos;
+        }
+
+        if (ponto !== null) {
+            const v = avaliar(df, ponto), y0 = avaliar(f, ponto);
+            if (isFinite(v) && isFinite(y0)) {
+                if (Math.abs(v) < 1e-9) {
+                    textos.push(`Com ${fmt(ponto)} camisetas vendidas (faturando ${R(y0)}), a próxima camiseta não muda o faturamento: ` +
+                        "a reta tangente fica **deitada**. É o ponto de virada.");
+                } else {
+                    textos.push(`Com **${fmt(ponto)} camisetas** vendidas, a fábrica fatura ${R(y0)}. A próxima camiseta ` +
+                        (v > 0 ? `traz cerca de **${R(v)} a mais**.` : `faz o faturamento **cair cerca de ${R(Math.abs(v))}**.`) +
+                        " A reta tracejada (tangente) mostra essa taxa: quanto mais inclinada, maior o efeito de cada venda.");
+                }
+            }
+        } else {
+            textos.push("Informe um ponto no campo ao lado para ver quanto rende a próxima camiseta naquele momento.");
+        }
+
+        const maximos = (criticos || []).filter(xc => {
+            const a = avaliar(df, xc - 1e-3), b = avaliar(df, xc + 1e-3);
+            return a > 0 && b < 0;
+        });
+        const minimos = (criticos || []).filter(xc => avaliar(df, xc - 1e-3) < 0 && avaliar(df, xc + 1e-3) > 0);
+        if (maximos.length) {
+            const xm = maximos[0];
+            textos.push(`Até **${fmt(xm, 2)} camisetas**, cada venda extra aumenta o faturamento (f' positivo). Depois disso, ` +
+                `os descontos fazem cada venda extra **diminuir** o faturamento (f' negativo). A melhor decisão é vender ` +
+                `${fmt(xm, 2)} camisetas, faturando o máximo de **${R(avaliar(f, xm))}** — é onde f'(x) = 0 e a curva rosa cruza o eixo x.`);
+        } else if (minimos.length) {
+            const xm = minimos[0];
+            textos.push(`O faturamento cai até x = **${fmt(xm, 2)}** e depois volta a subir: o pior momento é ali, com **${R(avaliar(f, xm))}** ` +
+                "(onde f'(x) = 0).");
+        }
+        return textos;
     }
 
     function desenhar(f, df, ponto, criticos) {
@@ -253,6 +308,7 @@ const Derivadas = (function () {
         UI.texto("der-regras", "—");
         UI.texto("der-ponto-exibido", "x₀");
         UI.texto("der-valor-ponto", "—");
+        UI.exemplo("der-exemplo", null);
     }
 
     function iniciar() {

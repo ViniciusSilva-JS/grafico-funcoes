@@ -514,3 +514,31 @@ div.erro {
         height: clamp(320px, 60vh, 600px);
     }
 }
+
+/* ----- 7. Exemplo do dia a dia (embaixo de cada gráfico) ----- */
+.exemplo {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: rgba(251, 191, 36, 0.07);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    border-left: 4px solid var(--regra);
+    border-radius: 10px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.exemplo h3 {
+    font-size: 0.85rem;
+    color: var(--regra);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+}
+
+.exemplo p + p {
+    margin-top: 8px;
+}
+
+.exemplo strong {
+    color: var(--formula);
+}

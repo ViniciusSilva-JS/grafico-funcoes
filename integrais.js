@@ -246,6 +246,7 @@ const Integrais = (function () {
             mostrarPassos(passos);
             UI.texto("int-valor", "— (escolha \"Definida\" para calcular a área)");
             UI.texto("int-regras", [...regras].join(", ") || "—");
+            UI.exemplo("int-exemplo", exemploIndefinida(F));
             return desenharIndefinida(f, F);
         }
 
@@ -301,8 +302,39 @@ const Integrais = (function () {
         if (valor < 0) interpretacao += " (valor negativo: a curva fica mais abaixo do eixo x do que acima)";
         UI.texto("int-valor", interpretacao);
         UI.texto("int-regras", [...regras].join(", ") || "—");
+        UI.exemplo("int-exemplo", exemploDefinida(fx, a, b, valor));
 
         desenharDefinida(f, a, b);
+    }
+
+    // Situação real de faturamento para a integral definida (área pintada)
+    function exemploDefinida(fx, a, b, valor) {
+        const R = UI.reais;
+        const ini = Math.min(a, b), fim = Math.max(a, b);
+        const meses = fim - ini;
+        const textos = [
+            "Pense em f(x) como o faturamento **por mês** de uma sorveteria (em R$ mil), e x como o mês. " +
+            `A área pintada de x = ${fmt(a, 4)} até x = ${fmt(b, 4)} junta o faturamento de todos esses meses: ` +
+            `no total foram **${R(valor)} mil**.`,
+            `É como somar todos os extratos mensais de uma vez. No início do período a loja faturava ${R(fx(ini))} mil por mês ` +
+            `e no fim ${R(fx(fim))} mil por mês` +
+            (meses > 0 ? `; na média, **${R(valor / (b - a))} mil por mês** durante ${fmt(meses, 4)} meses.` : ".")
+        ];
+        if (valor < 0) {
+            textos.push("O resultado deu negativo porque a curva passa mais tempo abaixo do eixo x: na prática, os meses de prejuízo superaram os de lucro.");
+        }
+        return textos;
+    }
+
+    // Situação real de faturamento para a integral indefinida (primitiva)
+    function exemploIndefinida(F) {
+        return [
+            "Pense em f(x) como quanto a sorveteria fatura **por mês** (a curva azul). A primitiva F(x) (curva rosa) é o " +
+            "**faturamento acumulado** até o mês x: o total que já entrou no caixa desde o começo.",
+            `Aqui F(x) = ${texto(F)} + C. O **"+ C"** é o valor que já estava no caixa antes de começar a contar ` +
+            "(o saldo inicial): ele muda onde a curva começa, mas não muda o quanto ela cresce.",
+            "Para saber quanto a loja faturou entre dois meses, escolha **Definida** e informe o mês inicial (a) e o final (b)."
+        ];
     }
 
     function mostrarPassos(passos) {
@@ -350,6 +382,7 @@ const Integrais = (function () {
         UI.el("int-passos").innerHTML = "";
         UI.texto("int-valor", "—");
         UI.texto("int-regras", "—");
+        UI.exemplo("int-exemplo", null);
     }
 
     // Mostra os campos a e b só na integral definida

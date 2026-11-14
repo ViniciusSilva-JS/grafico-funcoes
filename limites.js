@@ -113,6 +113,7 @@ const Limites = (function () {
         const { continuidade, interpretacao } = analisar(a, infinito, tipo, esq, dir, L, fa, f);
         UI.texto("lim-continuidade", continuidade);
         UI.texto("lim-interpretacao", interpretacao);
+        UI.exemplo("lim-exemplo", exemploLimite(a, infinito, esq, dir, L, fa, fx));
 
         desenhar(fx, a, infinito, esq, dir, L, fa);
     }
@@ -178,6 +179,73 @@ const Limites = (function () {
         }
 
         return { continuidade, interpretacao };
+    }
+
+    // Situação real de faturamento que explica o que o gráfico mostra
+    function exemploLimite(a, infinito, esq, dir, L, fa, fx) {
+        const R = UI.reais;
+        const A = fmt(a);
+
+        if (infinito) {
+            if (isFinite(L)) {
+                const xg = Math.sign(a) * 1e6;
+                return [
+                    "Uma padaria de bairro investe cada vez mais em propaganda (x cresce sem parar). " +
+                    "No começo cada real investido traz muitos clientes novos, mas o bairro tem um número limitado de moradores.",
+                    `Por isso o faturamento se aproxima de **${R(L)} mil**, mas nunca passa disso: é o **teto do mercado** ` +
+                    `(a linha tracejada). Mesmo com x = 1.000.000, f(x) = ${fmt(fx(xg), 4)}.`
+                ];
+            }
+            if (L === Infinity) {
+                return ["Um curso online pode ser vendido infinitas vezes sem custo extra: quanto mais o tempo passa (x → ∞), " +
+                    "mais o faturamento cresce, **sem teto**. Por isso o limite é +∞."];
+            }
+            if (L === -Infinity) {
+                return ["Uma empresa que gasta mais do que fatura todo mês: com o passar do tempo (x → ∞) o prejuízo só aumenta, " +
+                    "**sem fundo**. Por isso o limite é −∞."];
+            }
+            return ["Uma sorveteria fatura muito no verão e pouco no inverno, ano após ano: o faturamento sobe e desce para sempre " +
+                "e **não se aproxima de um único valor**. Por isso o limite no infinito não existe."];
+        }
+
+        // Os dois lados existem e são iguais
+        if (isFinite(esq) && isFinite(dir) && mesmoValor(esq, dir)) {
+            if (isFinite(fa) && mesmoValor(fa, esq)) {
+                return [
+                    `Faturamento sem surpresas: vendendo ${fmt(a - 0.1, 4)} ou ${fmt(a + 0.1, 4)} unidades, ` +
+                    `o faturamento fica perto de **${R(esq)}**, e com exatamente ${A} unidades é **${R(fa)}**.`,
+                    "Não tem degrau nem buraco no gráfico: a função é **contínua**, então basta substituir x na fórmula."
+                ];
+            }
+            return [
+                `A fórmula calcula o faturamento, mas com exatamente **${A} unidades** a conta "trava" ` +
+                (isFinite(fa) ? `(dá ${fmt(fa, 4)}, diferente do esperado)` : "(dá 0/0, uma divisão impossível)") + ".",
+                `Mesmo assim, vendendo ${fmt(a - 0.001, 4)} ou ${fmt(a + 0.001, 4)} unidades o faturamento fica colado em **${R(esq)}**. ` +
+                `O limite mostra o valor que "deveria" estar ali: **${R(esq)}** (a bolinha vazada no gráfico). ` +
+                "Simplificando a fórmula, o buraco some."
+            ];
+        }
+
+        // Lados diferentes, ambos finitos: degrau
+        if (isFinite(esq) && isFinite(dir)) {
+            return [
+                `É como um preço de atacado: até ${A} unidades o preço por unidade é um, a partir de ${A} é outro.`,
+                `Logo antes de ${A} unidades o faturamento chega perto de **${R(esq)}**; logo depois vai para **${R(dir)}**. ` +
+                `Esse **degrau** no gráfico significa que cada lado aponta para um valor diferente, então o limite **não existe**.`
+            ];
+        }
+
+        // Algum lado vai para o infinito
+        if (!isNaN(esq) || !isNaN(dir)) {
+            return [
+                `Pense no custo por unidade quando a fábrica produz quase nada: o custo fixo é dividido por um número perto de zero ` +
+                `e o valor **dispara**.`,
+                `É o que acontece perto de x = ${A}: o gráfico sobe (ou desce) sem parar junto da linha tracejada (assíntota vertical). ` +
+                "Na prática, indica uma situação que a empresa deve evitar."
+            ];
+        }
+
+        return ["Perto desse ponto o faturamento não tem um valor definido (oscila ou não existe), então não dá para prever o resultado: o limite não existe."];
     }
 
     function preencherTabela(fx, a, tipo, infinito) {
@@ -249,6 +317,7 @@ const Limites = (function () {
         UI.texto("lim-expressao", "");
         UI.el("lim-corpo-tabela").innerHTML = "";
         ["lim-esquerda", "lim-direita", "lim-continuidade", "lim-interpretacao"].forEach(id => UI.texto(id, "—"));
+        UI.exemplo("lim-exemplo", null);
     }
 
     function iniciar() {
