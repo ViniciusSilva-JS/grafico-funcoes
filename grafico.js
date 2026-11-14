@@ -137,7 +137,7 @@ function desenharNoCanvas(idCanvas, datasets, opcoes = {}) {
             responsive: true,
             maintainAspectRatio: false, // a altura vem do CSS (.area-grafico)
             parsing: false,
-            animation: { duration: 300 },
+            animation: false, // sem animação: evita a curva "torta" ao dar zoom e recalcular
             interaction: { mode: "nearest", intersect: false },
             plugins: {
                 legend: {
@@ -147,7 +147,9 @@ function desenharNoCanvas(idCanvas, datasets, opcoes = {}) {
                 },
                 subtitle: {
                     display: temZoom,
-                    text: "Rodinha do mouse: zoom  •  Arrastar: mover  •  Clique duplo: voltar",
+                    text: window.matchMedia("(pointer: coarse)").matches
+                        ? "Pinça: zoom • Arrastar: mover • Toque duplo: voltar"   // celular
+                        : "Rodinha do mouse: zoom  •  Arrastar: mover  •  Clique duplo: voltar",
                     color: CORES.textoFraco,
                     font: { size: 11 },
                     padding: { bottom: 6 }
@@ -196,6 +198,7 @@ function reamostrar(chart) {
     chart.data.datasets.forEach(ds => {
         if (typeof ds.gerador === "function") ds.data = amostrar(ds.gerador, min, max);
     });
+    chart.stop(); // garante que nenhuma animação antiga sobrescreva os pontos novos
     chart.update("none");
 }
 

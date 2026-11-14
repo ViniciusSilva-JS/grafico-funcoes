@@ -510,6 +510,7 @@ div.erro {
 
 @media (max-width: 820px) {
     .area-grafico {
+        flex: none; /* empilhado, o flex: 1 encolhia a altura do gráfico */
         height: clamp(320px, 60vh, 600px);
     }
 }

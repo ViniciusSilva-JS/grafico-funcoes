@@ -137,32 +137,32 @@ estilo.css  →  visual de todas as telas
 
 ## 8. Testes
 
-Cada linha é um teste feito na aplicação. A coluna **Obtido** é preenchida depois de testar.
+Cada linha é um teste feito na aplicação (14/11/2026). A coluna **Obtido** mostra exatamente o que a tela devolveu.
 
 | Conteúdo | Entrada | Esperado | Obtido | OK? |
 |---|---|---|---|---|
-| Funções | Afim, a = 50, b = 200, x = 10 | f(10) = 700, D = ℝ, Im = ℝ, crescente | | |
-| Funções | Quadrática, a = −2, b = 100, c = 0 | Máximo em x = 25, f = 1250, Im = (−∞, 1250] | | |
-| Funções | Exponencial, a = 2, x = 3 | f(3) = 8, Im = ℝ*₊, crescente | | |
-| Funções | Constante, a = 500 | Im = {500}, constante | | |
-| Funções | Exponencial, a = 1 (inválido) | Mensagem de erro | | |
-| Limites | (x² − 100)/(x − 10), x → 10 | 20 | | |
-| Limites | 100x/(x + 5), x → ∞ | 100 | | |
-| Limites | Preço 10x (x < 100) e 8x (x ≥ 100), x → 100 | Esquerda 1000, direita 800, **não existe** | | |
-| Limites | 3x + 1, x → 2 | 7, contínua | | |
-| Derivadas | 500 | 0 | | |
-| Derivadas | x³ | 3x² | | |
-| Derivadas | −2x² + 100x | −4x + 100 | | |
-| Derivadas | x · (100 − 2x) | 100 − 4x | | |
-| Derivadas | (50x + 200)/x | −200/x² | | |
-| Derivadas | e^(0,05x) | 0,05 · e^(0,05x) | | |
-| Integrais | 500, de 0 a 12 | 6000 | | |
-| Integrais | x², de 0 a 3 | 9 | | |
-| Integrais | 4x + 100, de 0 a 10 | 1200 | | |
-| Integrais | eˣ, de 0 a 1 | ≈ 1,7183 | | |
-| Integrais | cos x, de 0 a π/2 | 1 | | |
-| Integrais | 2x · e^(x²), indefinida | e^(x²) + C | | |
-| Todos | Campo vazio | Mensagem de erro | | |
+| Funções | Afim, a = 50, b = 200, x = 10 | f(10) = 700, D = ℝ, Im = ℝ, crescente | f(10) = 700, D = ℝ, Im = ℝ, crescente | ✅ |
+| Funções | Quadrática, a = −2, b = 100, c = 0 | Máximo em x = 25, f = 1250, Im = (−∞, 1250] | Maior faturamento em x = 25 (f = 1250), Im = (−∞, 1250] | ✅ |
+| Funções | Exponencial, a = 2, x = 3 | f(3) = 8, Im = ℝ*₊, crescente | f(3) = 8, Im = ℝ*₊ = (0, +∞), crescente | ✅ |
+| Funções | Constante, a = 500 | Im = {500}, constante | Im = {500}, constante | ✅ |
+| Funções | Exponencial, a = 1 (inválido) | Mensagem de erro | "Na função exponencial, a deve ser maior que 0 e diferente de 1." | ✅ |
+| Limites | (x² − 100)/(x − 10), x → 10 | 20 | 20 (esquerda 20, direita 20; descontinuidade removível) | ✅ |
+| Limites | 100x/(x + 5), x → ∞ | 100 | 100 (assíntota horizontal y = 100) | ✅ |
+| Limites | Preço 10x (x < 100) e 8x (x ≥ 100), x → 100 | Esquerda 1000, direita 800, **não existe** | Esquerda 1000, direita 800, **não existe** (salto) | ✅ |
+| Limites | 3x + 1, x → 2 | 7, contínua | 7, contínua em x = 2 | ✅ |
+| Derivadas | 500 | 0 | 0 | ✅ |
+| Derivadas | x³ | 3x² | 3x² | ✅ |
+| Derivadas | −2x² + 100x | −4x + 100 | −4x + 100 | ✅ |
+| Derivadas | x · (100 − 2x) | 100 − 4x | −4x + 100 | ✅ |
+| Derivadas | (50x + 200)/x | −200/x² | −200/x² | ✅ |
+| Derivadas | e^(0,05x) | 0,05 · e^(0,05x) | 0.05·e^(0.05x) | ✅ |
+| Integrais | 500, de 0 a 12 | 6000 | 6000 | ✅ |
+| Integrais | x², de 0 a 3 | 9 | 9 | ✅ |
+| Integrais | 4x + 100, de 0 a 10 | 1200 | 1200 | ✅ |
+| Integrais | eˣ, de 0 a 1 | ≈ 1,7183 | ≈ 1.7183 | ✅ |
+| Integrais | cos x, de 0 a π/2 | 1 | 1 | ✅ |
+| Integrais | 2x · e^(x²), indefinida | e^(x²) + C | e^(x²) + C | ✅ |
+| Todos | Campo vazio | Mensagem de erro | Funções: "Preencha todos os valores corretamente!"; Limites, Derivadas e Integrais: "Digite uma função." | ✅ |
 
 ## 9. Registro de uso de IA
 
@@ -191,7 +191,7 @@ O grupo usou IA durante o desenvolvimento. Todo código gerado foi revisado e te
 - [x] Cálculo de integrais (5 regras)
 - [ ] Botão "Carregar exemplo" em cada conteúdo
 - [x] Tratamento de entradas inválidas
-- [ ] Preencher a tabela de testes
+- [x] Preencher a tabela de testes
 - [ ] Prints das telas
 - [ ] Completar o registro de uso de IA
 
