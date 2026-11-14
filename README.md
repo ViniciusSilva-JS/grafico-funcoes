@@ -184,13 +184,13 @@ O grupo usou IA durante o desenvolvimento. Todo código gerado foi revisado e te
 - [x] Estrutura do HTML dos quatro conteúdos
 - [x] Visual (CSS)
 - [x] Gráfico das funções
-- [ ] Menu trocando de conteúdo
-- [ ] Tabela, domínio, imagem, entradas/saídas e comportamento das funções
-- [ ] Cálculo de limites (com propriedades, laterais, infinito e inexistência)
-- [ ] Cálculo de derivadas (5 regras)
-- [ ] Cálculo de integrais (5 regras)
+- [x] Menu trocando de conteúdo
+- [x] Tabela, domínio, imagem, entradas/saídas e comportamento das funções
+- [x] Cálculo de limites (com propriedades, laterais, infinito e inexistência)
+- [x] Cálculo de derivadas (5 regras)
+- [x] Cálculo de integrais (5 regras)
 - [ ] Botão "Carregar exemplo" em cada conteúdo
-- [ ] Tratamento de entradas inválidas
+- [x] Tratamento de entradas inválidas
 - [ ] Preencher a tabela de testes
 - [ ] Prints das telas
 - [ ] Completar o registro de uso de IA

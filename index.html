@@ -218,12 +218,12 @@
             <div id="int-campo-limites" hidden>
                 <div class="campo">
                     <label for="int-a">Limite inferior (a):</label>
-                    <input type="number" id="int-a" value="0" step="0.5">
+                    <input type="text" id="int-a" value="0" placeholder="ex: 0">
                 </div>
 
                 <div class="campo">
                     <label for="int-b">Limite superior (b):</label>
-                    <input type="number" id="int-b" value="1" step="0.5">
+                    <input type="text" id="int-b" value="1" placeholder="ex: 10 ou pi/2">
                 </div>
             </div>
 
@@ -258,7 +258,13 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
     <script src="grafico.js"></script>
+    <script src="expressao.js"></script>
+    <script src="limites.js"></script>
+    <script src="derivadas.js"></script>
+    <script src="integrais.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

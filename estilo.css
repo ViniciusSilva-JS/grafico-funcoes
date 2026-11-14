@@ -60,9 +60,9 @@ h1 {
 /* ===== Container principal ===== */
 .container {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1700px;
     display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
+    grid-template-columns: 280px minmax(0, 1fr);
     gap: 24px;
     align-items: start;
 }
@@ -499,5 +499,17 @@ div.erro {
     .tabela th,
     .tabela td {
         padding: 5px 6px;
+    }
+}
+/* ----- 6. Gráfico grande -----
+   O gráfico ocupa toda a largura que sobra e boa parte da altura da tela.
+   Para deixar maior ou menor, mude a altura abaixo. */
+.area-grafico {
+    height: clamp(420px, 72vh, 900px);
+}
+
+@media (max-width: 820px) {
+    .area-grafico {
+        height: clamp(320px, 60vh, 600px);
     }
 }
