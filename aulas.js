@@ -189,6 +189,7 @@ const AULAS = {
             },
             {
                 titulo: "Continuidade e descontinuidades",
+                juntos: true, // cartões curtos: aparecem todos na mesma tela
                 cards: [
                     {
                         titulo: "Função contínua",
@@ -536,81 +537,192 @@ const AULAS = {
     }
 };
 
-
 // =====================================================
-// Montagem das aulas na página
+// Aula guiada: um passo de cada vez
+// Início → um conceito por tela → dicas → perguntas → conclusão.
+// A calculadora fica fechada até o aluno abrir (ou clicar em "Testar").
 // =====================================================
 const Aulas = (function () {
 
     // Escapa o HTML e transforma **texto** em destaque
     const md = s => UI.escapar(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    const ORDEM = ["funcoes", "limites", "derivadas", "integrais"];
 
-    function cardHTML(nome, card, gi, ci) {
-        let h = `<article class="aula-card">`;
-        h += `<h4>${md(card.titulo)}</h4>`;
-        if (card.formula) h += `<div class="formula-grande">${md(card.formula)}</div>`;
-        if (card.texto) h += `<p>${md(card.texto)}</p>`;
-        if (card.itens) h += `<ul>${card.itens.map(i => `<li>${md(i)}</li>`).join("")}</ul>`;
-        if (card.diaADia) h += `<div class="dia-a-dia"><span>No dia a dia</span>${md(card.diaADia)}</div>`;
-        if (card.testar) {
-            h += `<button class="botao-testar" data-aula="${nome}" data-grupo="${gi}" data-card="${ci}">` +
-                `▶ ${md(card.testar.rotulo)}</button>`;
-        }
-        return h + `</article>`;
+    const passos = {};   // lista de passos de cada aula
+    const estado = {};   // passo atual e respostas de cada aula
+
+    // Monta a sequência de telas de uma aula
+    function montarPassos(nome) {
+        const a = AULAS[nome];
+        const p = [{ tipo: "intro", titulo: "Início" }];
+        a.grupos.forEach((g, gi) => {
+            if (g.juntos) p.push({ tipo: "grupo", gi, titulo: g.titulo });
+            else g.cards.forEach((c, ci) => p.push({ tipo: "card", gi, ci, titulo: c.titulo }));
+        });
+        p.push({ tipo: "dicas", titulo: "Dicas" });
+        a.quiz.forEach((q, qi) => p.push({ tipo: "quiz", qi, titulo: `Pergunta ${qi + 1}` }));
+        p.push({ tipo: "fim", titulo: "Conclusão" });
+        return p;
     }
 
-    function quizHTML(nome, quiz) {
-        return quiz.map((q, qi) => `
-            <div class="quiz-pergunta" data-aula="${nome}" data-q="${qi}">
-                <p class="quiz-enunciado"><strong>${qi + 1}.</strong> ${md(q.pergunta)}</p>
-                <div class="quiz-opcoes">
-                    ${q.opcoes.map((o, oi) => `<button class="quiz-opcao" data-o="${oi}">${md(o)}</button>`).join("")}
+    const botaoTestar = (nome, gi, ci, rotulo) =>
+        `<button class="botao-testar" data-aula="${nome}" data-grupo="${gi}" data-card="${ci}">▶ Testar: ${md(rotulo)}</button>`;
+
+    const acertos = nome => {
+        const r = estado[nome].respostas;
+        return AULAS[nome].quiz.filter((q, qi) => r[qi] === q.certa).length;
+    };
+
+    // ---------- Conteúdo de cada tipo de tela ----------
+
+    function telaIntro(nome, a) {
+        return `
+            <h2 class="licao-titulo">${md(a.titulo)}</h2>
+            ${a.intro.map(p => `<p class="licao-texto">${md(p)}</p>`).join("")}
+            <div class="licao-conceitos">
+                ${a.conceitos.map(c => `<div class="conceito"><strong>${md(c.nome)}</strong><span>${md(c.texto)}</span></div>`).join("")}
+            </div>
+            <p class="licao-dica-nav">Vamos por partes: um conceito de cada vez. Clique em <strong>Começar</strong>.</p>`;
+    }
+
+    function telaCard(nome, a, p) {
+        const g = a.grupos[p.gi], c = g.cards[p.ci];
+        return `
+            <span class="licao-sobre">${md(g.titulo)}</span>
+            <h2 class="licao-titulo">${md(c.titulo)}</h2>
+            ${c.formula ? `<div class="formula-destaque">${md(c.formula)}</div>` : ""}
+            ${c.texto ? `<p class="licao-texto">${md(c.texto)}</p>` : ""}
+            ${c.diaADia ? `<div class="dia-a-dia"><span>No dia a dia</span>${md(c.diaADia)}</div>` : ""}
+            ${c.itens ? `<details class="licao-detalhes"><summary>Ver propriedades</summary><ul>${c.itens.map(i => `<li>${md(i)}</li>`).join("")}</ul></details>` : ""}
+            ${c.testar ? botaoTestar(nome, p.gi, p.ci, c.testar.rotulo) : ""}`;
+    }
+
+    function telaGrupo(nome, a, p) {
+        const g = a.grupos[p.gi];
+        return `
+            <h2 class="licao-titulo">${md(g.titulo)}</h2>
+            <div class="licao-mini-grid">
+                ${g.cards.map((c, ci) => `
+                    <div class="mini-card">
+                        <h4>${md(c.titulo)}</h4>
+                        ${c.formula ? `<div class="formula-grande">${md(c.formula)}</div>` : ""}
+                        ${c.texto ? `<p>${md(c.texto)}</p>` : ""}
+                        ${c.diaADia ? `<div class="dia-a-dia"><span>No dia a dia</span>${md(c.diaADia)}</div>` : ""}
+                        ${c.testar ? botaoTestar(nome, p.gi, ci, c.testar.rotulo) : ""}
+                    </div>`).join("")}
+            </div>`;
+    }
+
+    function telaDicas(nome, a) {
+        return `
+            <span class="licao-sobre">Antes das perguntas</span>
+            <h2 class="licao-titulo">Dicas da professora</h2>
+            <ul class="licao-dicas">${a.dicas.map(d => `<li>${md(d)}</li>`).join("")}</ul>
+            <p class="licao-dica-nav">Pronto? Agora responda algumas perguntas rápidas.</p>`;
+    }
+
+    function telaQuiz(nome, a, p) {
+        const q = a.quiz[p.qi];
+        const resp = estado[nome].respostas[p.qi];
+        const respondida = resp !== undefined;
+        const opcoes = q.opcoes.map((o, oi) => {
+            let cls = "quiz-opcao";
+            if (respondida && oi === q.certa) cls += " certa";
+            else if (respondida && oi === resp) cls += " errada";
+            return `<button class="${cls}" data-q="${p.qi}" data-o="${oi}" ${respondida ? "disabled" : ""}>${md(o)}</button>`;
+        }).join("");
+        const acertou = resp === q.certa;
+        return `
+            <span class="licao-sobre">Teste rápido · Pergunta ${p.qi + 1} de ${a.quiz.length}</span>
+            <h2 class="licao-titulo licao-pergunta">${md(q.pergunta)}</h2>
+            <div class="quiz-opcoes">${opcoes}</div>
+            ${respondida
+                ? `<p class="quiz-feedback ${acertou ? "ok" : "nao"}"><strong>${acertou ? "Acertou!" : "Quase!"}</strong> ${md(q.explicacao)}</p>`
+                : `<p class="licao-dica-nav">Escolha uma resposta.</p>`}`;
+    }
+
+    function telaFim(nome, a) {
+        const total = a.quiz.length, certas = acertos(nome);
+        const proxima = ORDEM[ORDEM.indexOf(nome) + 1];
+        const msg = certas === total ? "Excelente, acertou tudo!"
+            : certas >= total / 2 ? "Muito bem! Revise as perguntas que errou."
+            : "Vale a pena rever a aula com calma.";
+        return `
+            <div class="licao-fim">
+                <span class="licao-sobre">Aula ${a.numero} concluída</span>
+                <h2 class="licao-titulo">Você terminou: ${md(a.titulo)}</h2>
+                <div class="placar-grande"><strong>${certas}</strong> de ${total} perguntas certas</div>
+                <p class="licao-texto">${msg}</p>
+                <p class="licao-texto">${md(a.pratica)}</p>
+                <div class="licao-fim-botoes">
+                    <button class="botao" data-calc-abrir="${nome}">Abrir a calculadora</button>
+                    ${proxima ? `<button class="nav-secundario" data-proxima="${proxima}">Ir para a Aula ${AULAS[proxima].numero} · ${md(AULAS[proxima].titulo)} →</button>` : ""}
+                    <button class="nav-secundario" data-ir="0">Rever a aula</button>
                 </div>
-                <p class="quiz-feedback" hidden></p>
-            </div>`).join("");
+            </div>`;
+    }
+
+    // ---------- Desenho da aula ----------
+
+    function desenhar(nome) {
+        const a = AULAS[nome], ps = passos[nome], st = estado[nome];
+        const p = ps[st.passo];
+        const ultimo = ps.length - 1;
+        const pct = Math.round(st.passo / ultimo * 100);
+
+        let corpo;
+        if (p.tipo === "intro") corpo = telaIntro(nome, a);
+        else if (p.tipo === "card") corpo = telaCard(nome, a, p);
+        else if (p.tipo === "grupo") corpo = telaGrupo(nome, a, p);
+        else if (p.tipo === "dicas") corpo = telaDicas(nome, a);
+        else if (p.tipo === "quiz") corpo = telaQuiz(nome, a, p);
+        else corpo = telaFim(nome, a);
+
+        const proxRotulo = st.passo === 0 ? "Começar" : (ps[st.passo + 1] && ps[st.passo + 1].tipo === "fim" ? "Concluir" : "Próximo");
+
+        document.querySelector(`#aula-${nome} .licao`).innerHTML = `
+            <div class="licao-topo">
+                <span class="aula-tag">Aula ${a.numero} · ${md(a.titulo)}</span>
+                <span class="licao-contador">Passo ${st.passo + 1} de ${ps.length}</span>
+            </div>
+            <div class="licao-barra"><div style="width:${pct}%"></div></div>
+            <div class="licao-pontos">
+                ${ps.map((x, i) => `<button class="ponto${i === st.passo ? " atual" : ""}${i < st.passo ? " feito" : ""}" data-ir="${i}" title="${UI.escapar(x.titulo)}" aria-label="${UI.escapar(x.titulo)}"></button>`).join("")}
+            </div>
+            <div class="licao-corpo">${corpo}</div>
+            <div class="licao-nav">
+                <button class="nav-secundario" data-nav="-1" ${st.passo === 0 ? "disabled" : ""}>← Voltar</button>
+                ${st.passo < ultimo ? `<button class="botao" data-nav="1">${proxRotulo} →</button>` : ""}
+            </div>`;
     }
 
     function montar(nome) {
-        const aula = AULAS[nome];
-        const sec = document.getElementById("aula-" + nome);
-        if (!aula || !sec) return;
-
-        let h = `
-            <div class="aula-intro">
-                <span class="aula-tag">Aula ${aula.numero}</span>
-                <h2>${md(aula.titulo)}</h2>
-                ${aula.intro.map(p => `<p>${md(p)}</p>`).join("")}
-                <div class="aula-conceitos">
-                    ${aula.conceitos.map(c => `<div class="conceito"><strong>${md(c.nome)}</strong><span>${md(c.texto)}</span></div>`).join("")}
+        passos[nome] = montarPassos(nome);
+        estado[nome] = { passo: 0, respostas: {} };
+        document.getElementById("aula-" + nome).innerHTML = `
+            <div class="licao"></div>
+            <div class="pratica-barra">
+                <div class="pratica-texto">
+                    <strong>Calculadora da aula</strong>
+                    <span>${md(AULAS[nome].pratica)}</span>
                 </div>
+                <button class="nav-secundario" data-calc="${nome}">Abrir calculadora</button>
             </div>`;
-
-        aula.grupos.forEach((g, gi) => {
-            h += `<h3 class="aula-grupo-titulo">${md(g.titulo)}</h3>`;
-            h += `<div class="aula-grid">${g.cards.map((c, ci) => cardHTML(nome, c, gi, ci)).join("")}</div>`;
-        });
-
-        h += `
-            <div class="aula-rodape">
-                <div class="aula-dicas">
-                    <h3>Dicas da professora</h3>
-                    <ul>${aula.dicas.map(d => `<li>${md(d)}</li>`).join("")}</ul>
-                </div>
-                <div class="quiz">
-                    <h3>Teste rápido <span class="quiz-placar" id="placar-${nome}">0 de ${aula.quiz.length}</span></h3>
-                    ${quizHTML(nome, aula.quiz)}
-                </div>
-            </div>
-            <div class="pratica-titulo">
-                <h2>Agora é sua vez: pratique na calculadora</h2>
-                <p>${md(aula.pratica)}</p>
-            </div>`;
-
-        sec.innerHTML = h;
+        desenhar(nome);
     }
 
-    // Botão "Testar": preenche a calculadora com o exemplo e calcula
+    function irPara(nome, passo) {
+        const ps = passos[nome];
+        estado[nome].passo = Math.max(0, Math.min(ps.length - 1, passo));
+        desenhar(nome);
+        // mantém o topo da lição visível ao trocar de passo
+        const licao = document.querySelector(`#aula-${nome} .licao`);
+        if (licao.getBoundingClientRect().top < 0) licao.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    // Botão "Testar": abre a calculadora, preenche com o exemplo e calcula
     function testar(nome, valores) {
+        abrirCalculadora(nome);
         if (nome === "funcoes") {
             if (valores.tipo) selectTipo.value = valores.tipo;
             ["a", "b", "c"].forEach(k => { if (valores[k] !== undefined) document.getElementById(k).value = valores[k]; });
@@ -626,41 +738,44 @@ const Aulas = (function () {
         document.getElementById("modulo-" + nome).scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    const acertos = {};
-
-    // Cliques (botões de testar e respostas do quiz)
+    // ---------- Cliques ----------
     document.addEventListener("click", ev => {
-        const bt = ev.target.closest(".botao-testar");
-        if (bt) {
-            const card = AULAS[bt.dataset.aula].grupos[bt.dataset.grupo].cards[bt.dataset.card];
-            testar(bt.dataset.aula, card.testar.valores);
+        const alvo = ev.target.closest("button");
+        if (!alvo) return;
+        const sec = alvo.closest("section.aula");
+        const nome = sec ? sec.dataset.modulo : null;
+        const d = alvo.dataset;
+
+        if (d.nav && nome) return irPara(nome, estado[nome].passo + Number(d.nav));
+        if (d.ir !== undefined && nome) return irPara(nome, Number(d.ir));
+
+        if (alvo.classList.contains("botao-testar")) {
+            const card = AULAS[d.aula].grupos[d.grupo].cards[d.card];
+            return testar(d.aula, card.testar.valores);
+        }
+
+        if (alvo.classList.contains("quiz-opcao") && nome) {
+            const qi = Number(d.q);
+            if (estado[nome].respostas[qi] === undefined) {
+                estado[nome].respostas[qi] = Number(d.o);
+                desenhar(nome);
+            }
             return;
         }
 
-        const op = ev.target.closest(".quiz-opcao");
-        if (op) {
-            const box = op.closest(".quiz-pergunta");
-            if (box.classList.contains("respondida")) return;
-            const nome = box.dataset.aula;
-            const q = AULAS[nome].quiz[box.dataset.q];
-            const escolha = Number(op.dataset.o);
-            box.classList.add("respondida");
-            box.querySelectorAll(".quiz-opcao").forEach((b, i) => {
-                if (i === q.certa) b.classList.add("certa");
-                else if (i === escolha) b.classList.add("errada");
-                b.disabled = true;
-            });
-            const acertou = escolha === q.certa;
-            if (acertou) acertos[nome] = (acertos[nome] || 0) + 1;
-            const fb = box.querySelector(".quiz-feedback");
-            fb.hidden = false;
-            fb.className = "quiz-feedback " + (acertou ? "ok" : "nao");
-            fb.innerHTML = (acertou ? "<strong>Acertou!</strong> " : "<strong>Quase!</strong> ") + md(q.explicacao);
-            document.getElementById("placar-" + nome).textContent = `${acertos[nome] || 0} de ${AULAS[nome].quiz.length}`;
+        if (d.calc) return alternarCalculadora(d.calc);
+        if (d.calcAbrir) {
+            abrirCalculadora(d.calcAbrir);
+            document.getElementById("modulo-" + d.calcAbrir).scrollIntoView({ behavior: "smooth", block: "start" });
+            return;
+        }
+        if (d.proxima) {
+            selectModulo.value = d.proxima;
+            trocarModulo();
         }
     });
 
-    Object.keys(AULAS).forEach(montar);
+    ORDEM.forEach(montar);
 
-    return { montar, testar };
+    return { montar, testar, irPara };
 })();

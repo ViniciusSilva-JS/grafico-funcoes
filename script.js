@@ -274,25 +274,53 @@ const MODULOS = {
   integrais: { titulo: "Aula 4 · Integrais", iniciar: Integrais.iniciar },
 };
 const iniciados = new Set();
+const calculadorasAbertas = new Set();
+
+// A calculadora de cada aula começa fechada: o aluno estuda primeiro e depois pratica
+function abrirCalculadora(nome) {
+  calculadorasAbertas.add(nome);
+  document.getElementById("modulo-" + nome).hidden = false;
+  atualizarBotaoCalculadora(nome);
+
+  // Na primeira vez que abre, carrega um exemplo e calcula
+  // (o gráfico só pode ser criado com o módulo visível)
+  if (!iniciados.has(nome) && MODULOS[nome].iniciar) MODULOS[nome].iniciar();
+  iniciados.add(nome);
+
+  // Gráficos criados com a calculadora escondida precisam se ajustar ao tamanho
+  requestAnimationFrame(() => Object.values(graficos).forEach(g => g.resize()));
+}
+
+function fecharCalculadora(nome) {
+  calculadorasAbertas.delete(nome);
+  document.getElementById("modulo-" + nome).hidden = true;
+  atualizarBotaoCalculadora(nome);
+}
+
+function alternarCalculadora(nome) {
+  if (calculadorasAbertas.has(nome)) fecharCalculadora(nome);
+  else {
+    abrirCalculadora(nome);
+    document.getElementById("modulo-" + nome).scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function atualizarBotaoCalculadora(nome) {
+  const botao = document.querySelector(`[data-calc="${nome}"]`);
+  if (botao) botao.textContent = calculadorasAbertas.has(nome) ? "Fechar calculadora" : "Abrir calculadora";
+}
 
 function trocarModulo() {
   const escolhido = selectModulo.value;
 
-  // Mostra só o módulo escolhido (os outros ficam com hidden)
+  // Mostra só a aula escolhida; a calculadora dela só aparece se estiver aberta
   Object.keys(MODULOS).forEach(nome => {
-    document.getElementById("modulo-" + nome).hidden = nome !== escolhido;
-    document.getElementById("aula-" + nome).hidden = nome !== escolhido; // conteúdo de ensino
+    document.getElementById("aula-" + nome).hidden = nome !== escolhido;
+    document.getElementById("modulo-" + nome).hidden = !(nome === escolhido && calculadorasAbertas.has(nome));
   });
   // O título grande fica fixo (nome do site); a aba do navegador mostra a aula
   document.title = `${MODULOS[escolhido].titulo} | Cálculo no Dia a Dia`;
   window.scrollTo({ top: 0 });
-
-  // Na primeira vez que abre, carrega um exemplo e calcula
-  // (o gráfico só pode ser criado com o módulo visível)
-  if (!iniciados.has(escolhido) && MODULOS[escolhido].iniciar) {
-    MODULOS[escolhido].iniciar();
-  }
-  iniciados.add(escolhido);
 }
 
 selectModulo.addEventListener("change", trocarModulo);
