@@ -266,13 +266,12 @@ botaoGerar.addEventListener("click", gerarGrafico);
 // Menu "Escolha o conteúdo" (canto superior direito)
 // =====================================================
 const selectModulo = document.getElementById("modulo");
-const titulo = document.getElementById("titulo");
 
 const MODULOS = {
-  funcoes: { titulo: "Gerador de gráfico de Funções", iniciar: null },
-  limites: { titulo: "Calculadora de Limites", iniciar: Limites.iniciar },
-  derivadas: { titulo: "Calculadora de Derivadas", iniciar: Derivadas.iniciar },
-  integrais: { titulo: "Calculadora de Integrais", iniciar: Integrais.iniciar },
+  funcoes: { titulo: "Aula 1 · Funções", iniciar: null },
+  limites: { titulo: "Aula 2 · Limites", iniciar: Limites.iniciar },
+  derivadas: { titulo: "Aula 3 · Derivadas", iniciar: Derivadas.iniciar },
+  integrais: { titulo: "Aula 4 · Integrais", iniciar: Integrais.iniciar },
 };
 const iniciados = new Set();
 
@@ -282,9 +281,11 @@ function trocarModulo() {
   // Mostra só o módulo escolhido (os outros ficam com hidden)
   Object.keys(MODULOS).forEach(nome => {
     document.getElementById("modulo-" + nome).hidden = nome !== escolhido;
+    document.getElementById("aula-" + nome).hidden = nome !== escolhido; // conteúdo de ensino
   });
-  titulo.textContent = MODULOS[escolhido].titulo;
-  document.title = MODULOS[escolhido].titulo;
+  // O título grande fica fixo (nome do site); a aba do navegador mostra a aula
+  document.title = `${MODULOS[escolhido].titulo} | Cálculo no Dia a Dia`;
+  window.scrollTo({ top: 0 });
 
   // Na primeira vez que abre, carrega um exemplo e calcula
   // (o gráfico só pode ser criado com o módulo visível)

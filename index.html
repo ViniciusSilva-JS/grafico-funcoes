@@ -9,20 +9,24 @@
 <body>
     <!-- Menu de escolha do módulo (canto superior direito) -->
     <div id="menu-modulo">
-        <label for="modulo">Escolha o conteúdo:</label>
+        <label for="modulo">Escolha a aula:</label>
         <select id="modulo">
-            <option value="funcoes">Funções</option>
-            <option value="limites">Limites</option>
-            <option value="derivadas">Derivadas</option>
-            <option value="integrais">Integrais</option>
+            <option value="funcoes">Aula 1 · Funções</option>
+            <option value="limites">Aula 2 · Limites</option>
+            <option value="derivadas">Aula 3 · Derivadas</option>
+            <option value="integrais">Aula 4 · Integrais</option>
         </select>
     </div>
 
-    <h1 id="titulo">Gerador de gráfico de Funções</h1>
+    <h1 id="titulo">Cálculo no Dia a Dia</h1>
+    <p class="tagline">Aprenda Funções, Limites, Derivadas e Integrais com o faturamento de uma pequena empresa: a Doceria da Vila.</p>
 
     <!-- =====================================================
          MÓDULO 1 — FUNÇÕES (aparece ao abrir a página)
          ===================================================== -->
+    <!-- Conteúdo de ensino da aula (montado pelo aulas.js) -->
+    <section id="aula-funcoes" class="aula" data-modulo="funcoes"></section>
+
     <div id="modulo-funcoes" class="container modulo">
 
         <div id="controles" class="controles">
@@ -95,6 +99,9 @@
     <!-- =====================================================
          MÓDULO 2 — LIMITES (Aula 2)
          ===================================================== -->
+    <!-- Conteúdo de ensino da aula (montado pelo aulas.js) -->
+    <section id="aula-limites" class="aula" data-modulo="limites" hidden></section>
+
     <div id="modulo-limites" class="container modulo" hidden>
 
         <div class="controles">
@@ -163,6 +170,9 @@
     <!-- =====================================================
          MÓDULO 3 — DERIVADAS (Aula 3)
          ===================================================== -->
+    <!-- Conteúdo de ensino da aula (montado pelo aulas.js) -->
+    <section id="aula-derivadas" class="aula" data-modulo="derivadas" hidden></section>
+
     <div id="modulo-derivadas" class="container modulo" hidden>
 
         <div class="controles">
@@ -216,6 +226,9 @@
     <!-- =====================================================
          MÓDULO 4 — INTEGRAIS (Aula 4)
          ===================================================== -->
+    <!-- Conteúdo de ensino da aula (montado pelo aulas.js) -->
+    <section id="aula-integrais" class="aula" data-modulo="integrais" hidden></section>
+
     <div id="modulo-integrais" class="container modulo" hidden>
 
         <div class="controles">
@@ -289,6 +302,7 @@
     <script src="limites.js"></script>
     <script src="derivadas.js"></script>
     <script src="integrais.js"></script>
+    <script src="aulas.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
