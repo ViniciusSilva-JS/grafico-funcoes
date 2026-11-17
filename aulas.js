@@ -88,25 +88,71 @@ const AULAS = {
                 pergunta: "Uma gráfica cobra R$ 30 fixos + R$ 0,50 por cópia. Qual função representa o valor cobrado?",
                 opcoes: ["f(x) = 30x + 0,5", "f(x) = 0,5x + 30", "f(x) = 30", "f(x) = 0,5x²"],
                 certa: 1,
-                explicacao: "O valor por cópia (0,5) multiplica x e a taxa fixa (30) é o b: f(x) = 0,5x + 30, uma função afim."
+                explicacao: "É uma **função afim**: tem uma parte que muda com a quantidade (R$ 0,50 por cópia) e uma parte fixa (R$ 30).",
+                erros: {
+                    0: "Os números foram trocados: 30x diria que **cada cópia custa R$ 30**, e a taxa fixa seria só R$ 0,50.",
+                    2: "f(x) = 30 ignora as cópias: seria **só a taxa fixa**, como se ninguém imprimisse nada.",
+                    3: "Não há x² no problema: o preço de cada cópia é **sempre o mesmo**, então o gráfico é uma reta, não uma parábola."
+                },
+                passos: [
+                    "A parte que depende da quantidade é **0,5 · x** (cada cópia custa R$ 0,50).",
+                    "A parte que não depende de x é a taxa fixa: **b = 30**.",
+                    "Juntando no formato ax + b: **f(x) = 0,5x + 30**, com a = 0,5 e b = 30."
+                ],
+                exemplo: "Um pedido de 100 cópias custa f(100) = 0,5 · 100 + 30 = **R$ 80**."
             },
             {
                 pergunta: "Em f(x) = −x² + 10x, qual quantidade dá o faturamento máximo?",
                 opcoes: ["x = 10", "x = 5", "x = 25", "x = 0"],
                 certa: 1,
-                explicacao: "xᵥ = −b/2a = −10/(2·(−1)) = 5. Como a < 0, o vértice é o ponto máximo."
+                explicacao: "O ponto mais alto de uma parábola que abre para baixo (a < 0) é o **vértice**. A quantidade ideal é o xᵥ.",
+                erros: {
+                    0: "Em x = 10 o faturamento é f(10) = −100 + 100 = **0**: é onde a parábola corta o eixo x (uma raiz), não o topo.",
+                    2: "25 é o **valor do faturamento máximo** (yᵥ), não a quantidade que dá esse máximo (xᵥ).",
+                    3: "x = 0 também é uma raiz: f(0) = 0. Sem vender nada, o faturamento é zero."
+                },
+                passos: [
+                    "Identifique os coeficientes: **a = −1** e **b = 10**.",
+                    "Use a fórmula do vértice: xᵥ = −b / (2a) = −10 / (2 · (−1)) = −10 / (−2) = **5**.",
+                    "Como a < 0, a parábola abre para baixo, então o vértice é o **ponto máximo**.",
+                    "O faturamento máximo é f(5) = −25 + 50 = **25**."
+                ],
+                exemplo: "Vendendo 5 caixas a doceria fatura o máximo (25). Vendendo 6, já cai para f(6) = 24: o desconto passa a pesar mais."
             },
             {
                 pergunta: "Qual é a imagem de f(x) = 3ˣ?",
                 opcoes: ["ℝ", "(0, +∞)", "[0, +∞)", "{3}"],
                 certa: 1,
-                explicacao: "A exponencial é sempre positiva e nunca chega a zero: imagem (0, +∞)."
+                explicacao: "A imagem é o conjunto de **todos os valores que f(x) pode dar**. Na exponencial, o resultado é sempre positivo e nunca chega a zero.",
+                erros: {
+                    0: "ℝ incluiria **números negativos**, e 3ˣ nunca dá negativo.",
+                    2: "[0, +∞) inclui o **zero**, mas 3ˣ nunca vale exatamente 0, só chega cada vez mais perto.",
+                    3: "{3} seria uma função constante. Em 3ˣ o resultado **muda** conforme x muda."
+                },
+                passos: [
+                    "Teste alguns valores: 3⁰ = 1,  3² = 9,  3⁻¹ = 1/3,  3⁻² = 1/9.",
+                    "Com x muito grande, 3ˣ **cresce sem parar** (vai para +∞).",
+                    "Com x muito negativo, 3ˣ fica **cada vez mais perto de 0**, mas nunca chega a 0 nem fica negativo.",
+                    "Por isso a imagem é **(0, +∞)**: todos os números positivos."
+                ],
+                exemplo: "Um faturamento que triplica todo mês pode ficar pequeno se olharmos para o passado, mas **nunca vira zero nem negativo**."
             },
             {
                 pergunta: "O aluguel de R$ 1.500, que não muda com as vendas, é uma função…",
                 opcoes: ["Afim", "Quadrática", "Constante", "Exponencial"],
                 certa: 2,
-                explicacao: "A saída é sempre 1.500 para qualquer x: função constante (reta horizontal)."
+                explicacao: "Uma **função constante** dá sempre a mesma saída, não importa qual seja a entrada.",
+                erros: {
+                    0: "Na afim a saída **muda com x** (tem o termo ax). O aluguel não muda.",
+                    1: "Na quadrática aparece **x²** e o gráfico é uma parábola. Aqui não há nada variando.",
+                    3: "Na exponencial o x fica **no expoente** e o valor cresce ou diminui. O aluguel é sempre igual."
+                },
+                passos: [
+                    "A entrada x é a **quantidade de doces vendidos**.",
+                    "A saída é sempre **1.500**, para qualquer valor de x.",
+                    "Isso se escreve **f(x) = 1500**: uma função constante, cujo gráfico é uma reta horizontal."
+                ],
+                exemplo: "Vendendo 0 ou 1.000 brigadeiros, a doceria paga **os mesmos R$ 1.500** de aluguel."
             }
         ],
         pratica: "Escolha um tipo de função, mude os valores de a, b e c e veja a tabela, o gráfico, o domínio e a imagem mudarem na hora."
@@ -228,25 +274,72 @@ const AULAS = {
                 pergunta: "Quanto vale lim x→3 (2x + 1)?",
                 opcoes: ["6", "7", "3", "Não existe"],
                 certa: 1,
-                explicacao: "A função é contínua, então basta substituir: 2·3 + 1 = 7."
+                explicacao: "Quando a função é **contínua** (sem buracos nem saltos), o limite é igual ao valor da função: basta **substituir**.",
+                erros: {
+                    0: "6 é só o 2 · 3. **Faltou somar o 1.**",
+                    2: "3 é o valor de **x**, não de f(x). O limite pergunta para onde f(x) vai.",
+                    3: "O limite existe: 2x + 1 é um polinômio, contínuo em todos os pontos, **sem saltos**."
+                },
+                passos: [
+                    "2x + 1 é um polinômio, e todo polinômio é **contínuo**.",
+                    "Então dá para substituir direto: **2 · 3 + 1**.",
+                    "6 + 1 = **7**."
+                ],
+                exemplo: "Se o faturamento é 2x + 1 (em R$ mil), chegando perto de 3 encomendas ele se aproxima de **R$ 7 mil**."
             },
             {
                 pergunta: "Quanto vale lim x→2 (x² − 4)/(x − 2)?",
                 opcoes: ["0", "4", "Não existe", "∞"],
                 certa: 1,
-                explicacao: "Substituir dá 0/0. Fatorando: (x − 2)(x + 2)/(x − 2) = x + 2 → 2 + 2 = 4."
+                explicacao: "Substituir direto dá **0/0**, que não é uma resposta: é um aviso de que a expressão pode ser **simplificada**.",
+                erros: {
+                    0: "0 é só o numerador. **0/0 não vale zero**: é uma indeterminação.",
+                    2: "O limite existe. O que não existe é **f(2)** (há um \"buraco\" no gráfico), mas os valores perto de 2 chegam em 4.",
+                    3: "∞ apareceria se **só o denominador** zerasse. Aqui os dois zeram, e a fração pode ser simplificada."
+                },
+                passos: [
+                    "Substitua x = 2: (4 − 4) / (2 − 2) = **0/0** → indeterminação.",
+                    "Fatore o numerador: **x² − 4 = (x − 2)(x + 2)**.",
+                    "Corte o (x − 2) de cima com o de baixo: sobra **x + 2**.",
+                    "Agora substitua: 2 + 2 = **4**."
+                ],
+                exemplo: "Na tabela da calculadora: com x = 1,999 o valor é 3,999 e com x = 2,001 é 4,001. **Os dois lados chegam em 4.**"
             },
             {
                 pergunta: "Pela esquerda f(x) vai para 5 e pela direita vai para 8. O limite…",
                 opcoes: ["é 5", "é 8", "é 6,5", "não existe"],
                 certa: 3,
-                explicacao: "O limite só existe quando os dois lados chegam no mesmo valor. Aqui é uma descontinuidade de salto."
+                explicacao: "O limite só existe quando a função chega **no mesmo valor pelos dois lados**.",
+                erros: {
+                    0: "5 é só o **lado esquerdo**. O limite precisa que os dois lados sejam iguais.",
+                    1: "8 é só o **lado direito**. O limite precisa que os dois lados sejam iguais.",
+                    2: "**Não se tira média** dos lados. Se eles são diferentes, o limite simplesmente não existe."
+                },
+                passos: [
+                    "Limite pela esquerda: **L₁ = 5**.",
+                    "Limite pela direita: **L₂ = 8**.",
+                    "Como 5 ≠ 8, o limite **não existe**.",
+                    "No gráfico isso aparece como um **degrau** (descontinuidade de salto)."
+                ],
+                exemplo: "Preço de atacado: logo antes de 100 doces o faturamento chega em um valor, logo depois **pula** para outro."
             },
             {
                 pergunta: "Quanto vale lim x→∞ (3x² + 1)/(x² + 2)?",
                 opcoes: ["0", "1", "3", "∞"],
                 certa: 2,
-                explicacao: "Os graus são iguais (2 e 2), então o limite é a razão dos coeficientes líderes: 3/1 = 3."
+                explicacao: "Quando x fica enorme, quem manda na fração são os **termos de maior grau**. O resto fica pequeno demais para fazer diferença.",
+                erros: {
+                    0: "O limite seria 0 se o grau de cima fosse **menor** que o de baixo. Aqui são iguais.",
+                    1: "1 ignora o **coeficiente 3** do termo principal de cima.",
+                    3: "O limite seria ∞ se o grau de cima fosse **maior** que o de baixo. Aqui são iguais."
+                },
+                passos: [
+                    "Maior grau em cima: **3x²**. Maior grau embaixo: **x²**.",
+                    "Os graus são **iguais** (2 e 2).",
+                    "Então o limite é a razão dos coeficientes: **3 / 1 = 3**.",
+                    "O +1 e o +2 ficam insignificantes perto de x² quando x é muito grande."
+                ],
+                exemplo: "Com x = 1.000: 3.000.001 / 1.000.002 ≈ **2,99999**, já colado em 3."
             }
         ],
         pratica: "Digite qualquer função, escolha para onde x vai (um número, inf ou -inf) e veja a tabela se aproximando do ponto pelos dois lados."
@@ -367,19 +460,54 @@ const AULAS = {
                 pergunta: "Qual é a derivada de x⁴?",
                 opcoes: ["x³", "4x³", "4x⁴", "x⁵/5"],
                 certa: 1,
-                explicacao: "Regra da potência: o 4 desce e o expoente diminui 1 → 4x³."
+                explicacao: "Use a **regra da potência**: (xⁿ)' = n · xⁿ⁻¹. O expoente desce multiplicando e depois diminui 1.",
+                erros: {
+                    0: "O expoente diminuiu, mas **faltou multiplicar pelo 4** que desce.",
+                    2: "O 4 desceu multiplicando, mas **o expoente não diminuiu** (deveria virar 3).",
+                    3: "x⁵/5 é a **integral** de x⁴, o caminho contrário da derivada."
+                },
+                passos: [
+                    "Aqui **n = 4**.",
+                    "O expoente desce multiplicando: **4 · x**…",
+                    "…e o expoente diminui 1: 4 − 1 = **3**.",
+                    "Resultado: **4x³**."
+                ],
+                exemplo: "Em x = 2, a taxa de variação é 4 · 2³ = **32**: nesse ponto a curva sobe 32 unidades para cada 1 de x."
             },
             {
                 pergunta: "Qual é a derivada de f(x) = 7?",
                 opcoes: ["7", "7x", "0", "1"],
                 certa: 2,
-                explicacao: "A derivada de uma constante é sempre 0: ela não muda."
+                explicacao: "A derivada mede **o quanto algo varia**. Uma constante não varia, então a derivada é **0**.",
+                erros: {
+                    0: "7 é o **valor** da função, não a variação dela.",
+                    1: "7x é uma **primitiva** (integral) de 7, o caminho contrário.",
+                    3: "1 é a derivada de **x**, não de um número fixo."
+                },
+                passos: [
+                    "f(x) = 7 vale **7 para qualquer x**.",
+                    "O gráfico é uma **reta horizontal**: inclinação zero.",
+                    "Logo **f'(x) = 0**."
+                ],
+                exemplo: "O aluguel fixo não aumenta quando a doceria vende mais: a **taxa de variação é zero**."
             },
             {
                 pergunta: "Qual é a derivada de sen(5x)?",
                 opcoes: ["cos(5x)", "5·cos(5x)", "−5·cos(5x)", "5·sen(5x)"],
                 certa: 1,
-                explicacao: "Regra da cadeia: derivada de fora cos(5x) vezes a derivada de dentro (5) → 5·cos(5x)."
+                explicacao: "É uma **função composta**: o seno (de fora) aplicado em 5x (de dentro). Por isso se usa a **regra da cadeia**.",
+                erros: {
+                    0: "Faltou multiplicar pela **derivada de dentro** (o 5). É o erro mais comum na regra da cadeia.",
+                    2: "A derivada do seno é o cosseno **positivo**. O sinal negativo aparece na derivada do **cosseno**.",
+                    3: "A derivada do seno é o **cosseno**, não o próprio seno."
+                },
+                passos: [
+                    "Função de fora: sen(u). Sua derivada é **cos(u)**.",
+                    "Função de dentro: u = 5x. Sua derivada é **5**.",
+                    "Multiplique as duas: cos(5x) · 5.",
+                    "Resultado: **5 · cos(5x)**."
+                ],
+                exemplo: "Vendas sazonais que sobem e descem 5 vezes mais rápido também **mudam 5 vezes mais rápido**."
             },
             {
                 pergunta: "Se f'(10) = 60, onde f é o faturamento ao vender x caixas, isso significa que…",
@@ -390,7 +518,18 @@ const AULAS = {
                     "o faturamento está caindo"
                 ],
                 certa: 1,
-                explicacao: "A derivada é o faturamento marginal: quanto entra a mais vendendo uma unidade extra."
+                explicacao: "A derivada do faturamento é o **faturamento marginal**: quanto entra a mais vendendo **uma unidade extra**.",
+                erros: {
+                    0: "O faturamento com 10 caixas é **f(10)**. O f'(10) é a **variação**, não o total.",
+                    2: "O máximo acontece onde **f'(x) = 0**, não onde vale 60.",
+                    3: "f' **positivo** significa que o faturamento ainda está **subindo**."
+                },
+                passos: [
+                    "f'(10) mede quanto f muda quando x passa de 10 para **um pouco mais**.",
+                    "Na prática: de 10 para 11 caixas, o faturamento muda **cerca de 60**.",
+                    "Como 60 é **positivo**, ainda vale a pena vender mais."
+                ],
+                exemplo: "Com f(x) = −2x² + 100x: f(10) = R$ 800 e f(11) = R$ 858. A 11ª caixa rendeu **R$ 58 ≈ 60**."
             }
         ],
         pratica: "Digite uma função e veja a derivada com o passo a passo de cada regra. Informe um ponto para ver a reta tangente e o faturamento marginal."
@@ -507,19 +646,54 @@ const AULAS = {
                 pergunta: "Quanto é ∫ 6 dx?",
                 opcoes: ["6 + C", "6x + C", "0", "3x² + C"],
                 certa: 1,
-                explicacao: "Regra da constante: ∫ k dx = kx + C → 6x + C."
+                explicacao: "Use a **regra da constante**: ∫ k dx = kx + C. Integrar é achar uma função cuja **derivada** dá 6.",
+                erros: {
+                    0: "A derivada de 6 + C é **0**, não 6. Faltou o x.",
+                    2: "0 é a **derivada** de 6, o caminho contrário da integral.",
+                    3: "A derivada de 3x² é **6x**, não 6."
+                },
+                passos: [
+                    "Pergunte: qual função tem **derivada igual a 6**?",
+                    "A derivada de **6x** é 6. ✓",
+                    "Some a constante de integração: **6x + C**."
+                ],
+                exemplo: "Faturando R$ 6 mil por mês, em x meses o total é **6x mil**, mais o que já havia no caixa (o C)."
             },
             {
                 pergunta: "Quanto é ∫ x³ dx?",
                 opcoes: ["3x² + C", "x⁴ + C", "x⁴/4 + C", "x³/3 + C"],
                 certa: 2,
-                explicacao: "Regra da potência: soma 1 no expoente (4) e divide por 4 → x⁴/4 + C."
+                explicacao: "Use a **regra da potência**: soma 1 no expoente e **divide** pelo novo expoente.",
+                erros: {
+                    0: "3x² é a **derivada** de x³, não a integral.",
+                    1: "A derivada de x⁴ é 4x³, não x³: **faltou dividir por 4**.",
+                    3: "O expoente precisa **aumentar 1** (de 3 para 4). Aqui ele continuou 3."
+                },
+                passos: [
+                    "Expoente atual: 3. Novo expoente: 3 + 1 = **4**.",
+                    "Divida pelo novo expoente: **x⁴/4**.",
+                    "Some a constante: **x⁴/4 + C**.",
+                    "Confira derivando: (x⁴/4)' = 4x³/4 = **x³** ✓."
+                ],
+                exemplo: "**Conferir derivando** é o jeito mais seguro de saber se a integral está certa."
             },
             {
                 pergunta: "Quanto vale ∫₀² 3 dx?",
                 opcoes: ["3", "5", "6", "9"],
                 certa: 2,
-                explicacao: "F(x) = 3x → F(2) − F(0) = 6 − 0 = 6. É a área de um retângulo 2 × 3."
+                explicacao: "Na integral definida, calcule a primitiva **nos dois limites e subtraia**: F(b) − F(a). O resultado é a área sob a curva.",
+                erros: {
+                    0: "3 é a **altura** do retângulo. Falta multiplicar pela base (2).",
+                    1: "5 seria **somar** 2 + 3. Área é base **vezes** altura.",
+                    3: "9 usaria base 3, mas o intervalo vai **de 0 a 2** (base 2)."
+                },
+                passos: [
+                    "Primitiva de 3: **F(x) = 3x**.",
+                    "Calcule nos limites: F(2) = **6** e F(0) = **0**.",
+                    "Subtraia: 6 − 0 = **6**.",
+                    "No gráfico: um **retângulo** de base 2 e altura 3, área 2 × 3 = 6."
+                ],
+                exemplo: "Faturando R$ 3 mil por mês durante 2 meses, o total acumulado é **R$ 6 mil**."
             },
             {
                 pergunta: "Por que a integral indefinida tem \"+ C\"?",
@@ -530,7 +704,18 @@ const AULAS = {
                     "Porque C é sempre igual a 1"
                 ],
                 certa: 1,
-                explicacao: "x² + 5 e x² − 3 têm a mesma derivada (2x). O C representa todas essas possibilidades."
+                explicacao: "Várias funções têm **a mesma derivada**, pois a derivada de qualquer número é zero. O C representa **todas** essas funções de uma vez.",
+                erros: {
+                    0: "Não é só formalidade: sem o C a resposta fica **incompleta**, porque mostra só uma das primitivas.",
+                    2: "A área sai da **integral definida**, que dá um número e não tem C.",
+                    3: "C pode ser **qualquer número real**, não só 1."
+                },
+                passos: [
+                    "Veja: (x²)' = 2x,  (x² + 5)' = 2x,  (x² − 3)' = 2x.",
+                    "Todas são **primitivas de 2x**: a diferença entre elas é só um número somado.",
+                    "Por isso escrevemos **x² + C**, onde C pode ser qualquer número."
+                ],
+                exemplo: "Sabendo só quanto a doceria fatura por mês, não dá para saber quanto **já havia no caixa** antes: esse valor é o C."
             }
         ],
         pratica: "Digite uma função, escolha integral indefinida ou definida e veja o passo a passo, a primitiva e a área pintada no gráfico."
@@ -636,9 +821,26 @@ const Aulas = (function () {
             <span class="licao-sobre">Teste rápido · Pergunta ${p.qi + 1} de ${a.quiz.length}</span>
             <h2 class="licao-titulo licao-pergunta">${md(q.pergunta)}</h2>
             <div class="quiz-opcoes">${opcoes}</div>
-            ${respondida
-                ? `<p class="quiz-feedback ${acertou ? "ok" : "nao"}"><strong>${acertou ? "Acertou!" : "Quase!"}</strong> ${md(q.explicacao)}</p>`
-                : `<p class="licao-dica-nav">Escolha uma resposta.</p>`}`;
+            ${respondida ? feedbackQuiz(q, resp, acertou) : `<p class="licao-dica-nav">Escolha uma resposta.</p>`}`;
+    }
+
+    // Explicação completa depois de responder: ideia, por que errou, passo a passo e dia a dia
+    function feedbackQuiz(q, resp, acertou) {
+        let h = `<div class="quiz-feedback ${acertou ? "ok" : "nao"}">`;
+        h += `<p><strong class="quiz-veredito">${acertou ? "Acertou!" : "Quase!"}</strong> ${md(q.explicacao)}</p>`;
+        if (!acertou) {
+            if (q.erros && q.erros[resp]) {
+                h += `<p class="quiz-erro"><strong>Por que não "${md(q.opcoes[resp])}"?</strong> ${md(q.erros[resp])}</p>`;
+            }
+            h += `<p class="quiz-certa">A resposta certa é <strong>${md(q.opcoes[q.certa])}</strong>.</p>`;
+        }
+        if (q.passos) {
+            h += `<div class="quiz-bloco"><span>Como resolver</span><ol>${q.passos.map(p => `<li>${md(p)}</li>`).join("")}</ol></div>`;
+        }
+        if (q.exemplo) {
+            h += `<div class="quiz-bloco quiz-dia"><span>No dia a dia</span><p>${md(q.exemplo)}</p></div>`;
+        }
+        return h + `</div>`;
     }
 
     function telaFim(nome, a) {
