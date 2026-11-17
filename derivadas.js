@@ -4,7 +4,7 @@
 // =====================================================
 
 const Derivadas = (function () {
-    const { N, X, simplificar, texto, temX, avaliar } = Expr;
+    const { N, simplificar, texto, temX, avaliar } = Expr;
 
     // Deriva "no". Se "passos" for um array, registra cada regra usada.
     function derivar(no, passos = null) {

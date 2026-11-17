@@ -108,23 +108,16 @@ O grupo usou o **Claude Code (Claude Opus 5.5)** no VS Code. Todo código gerado
 | # | Objetivo | Prompt | Resultado | Ajustes | Validação humana |
 |---|---|---|---|---|---|
 | 1 | Revisar o HTML | "vamos mecher somente na parte do html" | Lista de pendências do HTML | — | *(preencher)* |
-| 2 | Organizar o layout | "quero estruturar o html dessa forma" (com print) | Fórmula em cima, tabela ao lado do gráfico | — | *(preencher)* |
-| 3 | Entender o tamanho do gráfico | "como faço para tirar mais o som desse grafico? deixar ele mais amplo?" | Explicação, sem mudar código | — | *(preencher)* |
-| 4 | Menu de conteúdos | "quero que coloque como uma lista de escolha [...] no canto superior do lado direito" | Menu no canto superior direito | — | *(preencher)* |
-| 5 | Telas dos 4 conteúdos | "faça isso" | Uma área para cada conteúdo | Menu por cima do título corrigido | *(preencher)* |
-| 6 | Documentação | "coloque no readme.md uma documentação mais simples [...]" | README reescrito | — | *(preencher)* |
-| 7 | Dividir tarefas | "quero que voce divida o que [...] no js tem que fazer no css tem que fazer" | Lista de tarefas por integrante | — | *(preencher)* |
-| 8 | Fazer o JS de todas as abas | "analise a parte do html e veja o que esta faltando na parte do js para que funcione o sistema de calculadora perfeitamente todas as abas" | Cálculo de limites, derivadas e integrais com passo a passo | Cores do gráfico ajustadas ao fundo claro | *(preencher)* |
-| 9 | Gráfico maior | "tire todo o zoom que tem os graficos" / "da pra expandir o grafico para uma area maior" | Gráfico maior e zoom com o mouse | Corrigido bug da curva torta no zoom | *(preencher)* |
-| 10 | Atualizar o andamento | "analisa o codigo e ver no readme.md na parte de andamento o que ja foi feito" | Checklist atualizado | — | *(preencher)* |
-| 11 | Comparar com o PDF da AP2 | "analise o pdf e depois analise o projeto e veja o que estar faltando" | Lista do que faltava para a nota | — | *(preencher)* |
-| 12 | Corrigir os itens 1 a 3 | "vamos primeiramente conferir do 1 ate o 3" | Zoom corrigido, versão de celular, tabela de testes preenchida | Altura do gráfico no celular corrigida | *(preencher)* |
-| 13 | Exemplos práticos | "quero que voce coloque em cada grafico [...] um exemplo pratico do dia á dia" | Quadro "Exemplo do dia a dia" em cada calculadora | — | *(preencher)* |
-| 14 | Virar sistema de ensino | "quero tirar essa cara de apenas uma calculadora [...] remodular o sistema para um sistema de ensino" (com os PDFs das aulas) | Aulas com conceitos, exemplos, perguntas e botão "Testar" | — | *(preencher)* |
-| 15 | Simplificar funções | "eu quero somente 5 funções as mais faceis" | Aula 1 só com os 5 tipos da calculadora | — | *(preencher)* |
-| 16 | Menos informação na tela | "quero que deixe algo visualmente mais bonito [...] um aluno tendo seu primeiro contato" | Aula guiada, um passo por vez, calculadora fechada no início | — | *(preencher)* |
-| 17 | Varredura final | "verifique se ficou proporcional para outras telas e tambem faça uma varredura" | 7 tamanhos de tela e 50 verificações | Corrigidos gráfico vazio em Funções e campo "ponto" em Derivadas | *(preencher)* |
-| 18 | Documentação final | "cuide agora da parte da documentação" | Este README | — | *(preencher)* |
+ Fórmula em cima, tabela ao lado do gráfico | — | *(preencher)* |
+| 2| Telas dos 4 conteúdos | "faça isso" | Uma área para cada conteúdo | Menu por cima do título corrigido | *(preencher)* |
+| 3 | Documentação | "coloque no readme.md uma documentação mais simples [...]" | README reescrito | — | *(preencher)* |
+| 4 | Dividir tarefas | "quero que voce divida o que [...] no js tem que fazer no css tem que fazer" | Lista de tarefas por integrante | — | *(preencher)* |
+| 5 | Fazer o JS de todas as abas | "analise a parte do html e veja o que esta faltando na parte do js para que funcione o sistema de calculadora perfeitamente todas as abas" | Cálculo de limites, derivadas e integrais com passo a passo | Cores do gráfico ajustadas ao fundo claro | *(preencher)* |
+| 6 | Gráfico maior | "tire todo o zoom que tem os graficos" / "da pra expandir o grafico para uma area maior" | Gráfico maior e zoom com o mouse | Corrigido bug da curva torta no zoom | *(preencher)* |
+| 7| Atualizar o andamento | "analisa o codigo e ver no readme.md na parte de andamento o que ja foi feito" | Checklist atualizado | — | *(preencher)* |
+| 8 | Comparar com o PDF da AP2 | "analise o pdf e depois analise o projeto e veja o que estar faltando" | Lista do que faltava para a nota | — | *(preencher)* |
+| 9 | Varredura final | "verifique se ficou proporcional para outras telas e tambem faça uma varredura" | 7 tamanhos de tela e 50 verificações | Corrigidos gráfico vazio em Funções e campo "ponto" em Derivadas | *(preencher)* |
+| 10 | Documentação final | "cuide agora da parte da documentação" | Este README | — | *(preencher)* |
 
 > Na coluna **Validação humana**, cada integrante escreve como conferiu o resultado (ex.: "refiz a conta à mão", "testei no navegador").
 

@@ -263,7 +263,7 @@ botaoGerar.addEventListener("click", gerarGrafico);
 
 
 // =====================================================
-// Menu "Escolha o conteúdo" (canto superior direito)
+// Menu "Escolha a aula" (canto superior direito) e calculadora de cada aula
 // =====================================================
 const selectModulo = document.getElementById("modulo");
 
