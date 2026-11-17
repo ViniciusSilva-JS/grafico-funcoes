@@ -268,7 +268,7 @@ botaoGerar.addEventListener("click", gerarGrafico);
 const selectModulo = document.getElementById("modulo");
 
 const MODULOS = {
-  funcoes: { titulo: "Aula 1 · Funções", iniciar: null },
+  funcoes: { titulo: "Aula 1 · Funções", iniciar: () => gerarGrafico() },
   limites: { titulo: "Aula 2 · Limites", iniciar: Limites.iniciar },
   derivadas: { titulo: "Aula 3 · Derivadas", iniciar: Derivadas.iniciar },
   integrais: { titulo: "Aula 4 · Integrais", iniciar: Integrais.iniciar },
@@ -288,7 +288,9 @@ function abrirCalculadora(nome) {
   iniciados.add(nome);
 
   // Gráficos criados com a calculadora escondida precisam se ajustar ao tamanho
-  requestAnimationFrame(() => Object.values(graficos).forEach(g => g.resize()));
+  const ajustar = () => Object.values(graficos).forEach(g => g.resize());
+  ajustar();
+  requestAnimationFrame(ajustar);
 }
 
 function fecharCalculadora(nome) {
