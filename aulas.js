@@ -829,10 +829,20 @@ const Aulas = (function () {
         let h = `<div class="quiz-feedback ${acertou ? "ok" : "nao"}">`;
         h += `<p><strong class="quiz-veredito">${acertou ? "Acertou!" : "Quase!"}</strong> ${md(q.explicacao)}</p>`;
         if (!acertou) {
-            if (q.erros && q.erros[resp]) {
-                h += `<p class="quiz-erro"><strong>Por que não "${md(q.opcoes[resp])}"?</strong> ${md(q.erros[resp])}</p>`;
-            }
             h += `<p class="quiz-certa">A resposta certa é <strong>${md(q.opcoes[q.certa])}</strong>.</p>`;
+        }
+
+        // Sempre explica por que cada uma das outras opções está errada
+        // (se o aluno errou, a opção que ele escolheu aparece destacada)
+        const outras = q.opcoes.map((o, i) => i).filter(i => i !== q.certa && q.erros && q.erros[i]);
+        if (outras.length) {
+            h += `<div class="quiz-bloco quiz-outras"><span>Por que as outras opções estão erradas</span><ul>` +
+                outras.map(i => `
+                    <li class="${i === resp ? "escolhida" : ""}">
+                        <strong class="quiz-opcao-nome">${md(q.opcoes[i])}</strong>${i === resp ? ` <em class="quiz-sua">sua resposta</em>` : ""}
+                        <p>${md(q.erros[i])}</p>
+                    </li>`).join("") +
+                `</ul></div>`;
         }
         if (q.passos) {
             h += `<div class="quiz-bloco"><span>Como resolver</span><ol>${q.passos.map(p => `<li>${md(p)}</li>`).join("")}</ol></div>`;

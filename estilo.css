@@ -960,6 +960,47 @@ div.erro {
     border-left: 3px solid var(--regra);
 }
 
+/* "Por que as outras opções estão erradas" */
+.quiz-outras ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quiz-outras li {
+    padding: 8px 12px;
+    border-left: 3px solid rgba(248, 113, 113, 0.5);
+    border-radius: 6px;
+    background: rgba(248, 113, 113, 0.05);
+}
+
+.quiz-outras li.escolhida {
+    border-left-color: var(--erro);
+    background: var(--erro-bg);
+}
+
+.quiz-outras li p {
+    margin-top: 2px;
+    font-size: 0.95rem;
+}
+
+.quiz-opcao-nome {
+    color: var(--text) !important;
+    font-family: "Cambria Math", "Consolas", "Courier New", monospace;
+}
+
+.quiz-sua {
+    margin-left: 6px;
+    padding: 1px 8px;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 700;
+    color: #0b1220;
+    background: var(--erro);
+    border-radius: 999px;
+}
+
 .quiz-dia span {
     color: var(--regra);
 }
