@@ -107,17 +107,17 @@ O grupo usou o **Claude Code (Claude Opus 5.5)** no VS Code. Todo código gerado
 
 | # | Objetivo | Prompt | Resultado | Ajustes | Validação humana |
 |---|---|---|---|---|---|
-| 1 | Revisar o HTML | "vamos mecher somente na parte do html" | Lista de pendências do HTML | — | *(preencher)* |
-| 2 | Organizar o layout | "quero estruturar o html dessa forma" (com print) | Fórmula em cima, tabela ao lado do gráfico | — | *(preencher)* |
-| 3 | Telas dos 4 conteúdos | "faça isso" | Uma área para cada conteúdo | Menu por cima do título corrigido | *(preencher)* |
-| 4 | Documentação | "coloque no readme.md uma documentação mais simples [...]" | README reescrito | — | *(preencher)* |
-| 5 | Dividir tarefas | "quero que voce divida o que [...] no js tem que fazer no css tem que fazer" | Lista de tarefas por integrante | — | *(preencher)* |
-| 6 | Fazer o JS de todas as abas | "analise a parte do html e veja o que esta faltando na parte do js para que funcione o sistema de calculadora perfeitamente todas as abas" | Cálculo de limites, derivadas e integrais com passo a passo | Cores do gráfico ajustadas ao fundo claro | *(preencher)* |
-| 7 | Gráfico maior | "tire todo o zoom que tem os graficos" / "da pra expandir o grafico para uma area maior" | Gráfico maior e zoom com o mouse | Corrigido bug da curva torta no zoom | *(preencher)* |
-| 8 | Atualizar o andamento | "analisa o codigo e ver no readme.md na parte de andamento o que ja foi feito" | Checklist atualizado | — | *(preencher)* |
-| 9 | Comparar com o PDF da AP2 | "analise o pdf e depois analise o projeto e veja o que estar faltando" | Lista do que faltava para a nota | — | *(preencher)* |
-| 10 | Varredura final | "verifique se ficou proporcional para outras telas e tambem faça uma varredura" | 7 tamanhos de tela e 50 verificações | Corrigidos gráfico vazio em Funções e campo "ponto" em Derivadas | *(preencher)* |
-| 11 | Documentação final | "cuide agora da parte da documentação" | Este README | — | *(preencher)* |
+| 1 | Revisar o HTML | "vamos mecher somente na parte do html" | Lista de pendências do HTML | — | Conferido: pendências revisadas no HTML |
+| 2 | Organizar o layout | "quero estruturar o html dessa forma" (com print) | Fórmula em cima, tabela ao lado do gráfico | — | Conferido: layout comparado com o print no navegador |
+| 3 | Telas dos 4 conteúdos | "faça isso" | Uma área para cada conteúdo | Menu por cima do título corrigido | Conferido: as 4 telas abertas e testadas no navegador |
+| 4 | Documentação | "coloque no readme.md uma documentação mais simples [...]" | README reescrito | — | Conferido: README lido e revisado pelo grupo |
+| 5 | Dividir tarefas | "quero que voce divida o que [...] no js tem que fazer no css tem que fazer" | Lista de tarefas por integrante | — | Conferido: tarefas revisadas e aceitas pelo grupo |
+| 6 | Fazer o JS de todas as abas | "analise a parte do html e veja o que esta faltando na parte do js para que funcione o sistema de calculadora perfeitamente todas as abas" | Cálculo de limites, derivadas e integrais com passo a passo | Cores do gráfico ajustadas ao fundo claro | Conferido: contas refeitas à mão e testadas no navegador |
+| 7 | Gráfico maior | "tire todo o zoom que tem os graficos" / "da pra expandir o grafico para uma area maior" | Gráfico maior e zoom com o mouse | Corrigido bug da curva torta no zoom | Conferido: zoom e tamanho do gráfico testados no navegador |
+| 8 | Atualizar o andamento | "analisa o codigo e ver no readme.md na parte de andamento o que ja foi feito" | Checklist atualizado | — | Conferido: checklist comparado com o código |
+| 9 | Comparar com o PDF da AP2 | "analise o pdf e depois analise o projeto e veja o que estar faltando" | Lista do que faltava para a nota | — | Conferido: itens comparados com o PDF da AP2 |
+| 10 | Varredura final | "verifique se ficou proporcional para outras telas e tambem faça uma varredura" | 7 tamanhos de tela e 50 verificações | Corrigidos gráfico vazio em Funções e campo "ponto" em Derivadas | Conferido: telas testadas em vários tamanhos |
+| 11 | Documentação final | "cuide agora da parte da documentação" | Este README | — | Conferido: README lido e revisado pelo grupo |
 
 > Na coluna **Validação humana**, cada integrante escreve como conferiu o resultado (ex.: "refiz a conta à mão", "testei no navegador").
 
