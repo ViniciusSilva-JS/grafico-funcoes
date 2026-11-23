@@ -125,7 +125,7 @@ O grupo usou o **Claude Code (Claude Opus 5.5)** no VS Code. Todo código gerado
 
 | Nome | Parte |
 |---|---|
-| Vinicius | HTML e documentação |
-| jonh | CSS |
-| (salviano) | JS |
-| Riquelme | JS |
+| Marcos vinicius da Silva Lima| HTML e documentação |
+|John Lennon Lopes Silva| CSS |
+|Pedro Salviano de Araújo neto| JS |
+|Icaro Riquelme da Silva Freitas| JS |
