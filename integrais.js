@@ -205,6 +205,28 @@ const Integrais = (function () {
         return I(no);
     }
 
+    // Procura um "polo" (ponto onde f vai para o infinito) entre os pontos da grade.
+    // Devolve o x aproximado do polo, ou null se a função se comporta bem no intervalo.
+    function acharPolo(xs, ys) {
+        const abs = ys.map(Math.abs);
+        const ordenados = [...abs].sort((p, q) => p - q);
+        const mediana = ordenados[Math.floor(ordenados.length / 2)];
+        const grande = v => v > 10 && v > 50 * (mediana + 1e-9);
+
+        for (let i = 1; i < ys.length; i++) {
+            // 1) troca de sinal com valores enormes dos dois lados (ex.: 1/(x − π), tan x)
+            if (ys[i - 1] * ys[i] < 0 && grande(abs[i - 1]) && grande(abs[i])) {
+                return (xs[i - 1] + xs[i]) / 2;
+            }
+        }
+        // 2) pico isolado: um valor muito maior que o resto e que os vizinhos (ex.: 1/(x − π)²)
+        let im = 0;
+        for (let i = 1; i < abs.length; i++) if (abs[i] > abs[im]) im = i;
+        const vizinho = Math.max(im > 0 ? abs[im - 1] : 0, im < abs.length - 1 ? abs[im + 1] : 0);
+        if (abs[im] > 1000 * (mediana + 1) && abs[im] > 3 * vizinho) return xs[im];
+        return null;
+    }
+
     // Regra de Simpson (cálculo numérico da área)
     function simpson(f, a, b, n = 2000) {
         const h = (b - a) / n;
@@ -261,13 +283,23 @@ const Integrais = (function () {
 
         // A função precisa existir em todo o intervalo
         const n = 2000;
+        const xs = [], ys = [];
         for (let i = 0; i <= n; i++) {
             const x = a + (b - a) * i / n;
-            if (!isFinite(fx(x))) {
+            const y = fx(x);
+            if (!isFinite(y)) {
                 return mostrarErro(
                     `f(x) não existe em x = ${fmt(x, 4)}, dentro do intervalo [${fmt(a)}, ${fmt(b)}]. ` +
                     `Escolha outro intervalo (a integral seria imprópria).`, "int-funcao");
             }
+            xs.push(x); ys.push(y);
+        }
+        // O ponto problemático pode cair entre dois pontos da grade (ex.: 1/(x − π)).
+        const polo = acharPolo(xs, ys);
+        if (polo !== null) {
+            return mostrarErro(
+                `f(x) explode perto de x ≈ ${fmt(polo, 3)}, dentro do intervalo [${fmt(a)}, ${fmt(b)}]. ` +
+                `Escolha outro intervalo (a integral seria imprópria).`, "int-funcao");
         }
 
         let valor;

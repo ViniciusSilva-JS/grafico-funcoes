@@ -31,6 +31,18 @@ const Limites = (function () {
             return ult[2] > 0 ? Infinity : -Infinity;
         }
 
+        // Cresce devagar mas sem parar (ex.: ln x perto de 0): os valores andam sempre
+        // no mesmo sentido e os passos não diminuem → ±∞
+        const fim = finitos.slice(-5);
+        if (fim.length === 5) {
+            const difs = fim.slice(1).map((v, i) => v - fim[i]);
+            const mesmoSentido = difs.every(d => d > 0) || difs.every(d => d < 0);
+            const naoDiminui = Math.abs(difs[3]) >= 0.6 * Math.abs(difs[0]);
+            if (mesmoSentido && naoDiminui && Math.abs(fim[4] - fim[0]) > 1) {
+                return difs[0] > 0 ? Infinity : -Infinity;
+            }
+        }
+
         // Escolhe o ponto onde os valores ficaram mais estáveis
         let melhor = -1, menorDif = Infinity;
         for (let i = 1; i < finitos.length; i++) {
@@ -43,7 +55,8 @@ const Limites = (function () {
     }
 
     function lateral(f, a, lado) {
-        const hs = [1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7, 1e-8];
+        // vai até bem perto do ponto para pegar aproximações lentas (ex.: √x perto de 0)
+        const hs = [1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 1e-9, 1e-10, 1e-11, 1e-12];
         return estimar(hs.map(h => f(a + lado * h)));
     }
 

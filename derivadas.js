@@ -203,10 +203,13 @@ const Derivadas = (function () {
             UI.texto("der-valor-ponto", textoPonto.trim() ? "ponto inválido" : "informe um ponto para calcular");
             if (textoPonto.trim()) UI.el("der-valor-ponto").classList.add("erro");
         } else {
-            const v = avaliar(df, ponto);
+            // Se a própria função não existe no ponto (ex.: ln x em x = −1), a derivada também não existe
+            const fDefinida = isFinite(avaliar(f, ponto));
+            const v = fDefinida ? avaliar(df, ponto) : NaN;
             UI.texto("der-ponto-exibido", fmt(ponto));
             let interpretacao;
-            if (!isFinite(v)) interpretacao = " (a derivada não existe nesse ponto)";
+            if (!fDefinida) interpretacao = " (f(x) não está definida nesse ponto, então a derivada não existe)";
+            else if (!isFinite(v)) interpretacao = " (a derivada não existe nesse ponto)";
             else if (Math.abs(v) < 1e-9) interpretacao = " → ponto crítico: aqui o faturamento para de crescer (possível máximo ou mínimo)";
             else if (v > 0) interpretacao = ` → vendendo 1 unidade a mais, o faturamento sobe cerca de ${fmt(v, 4)}`;
             else interpretacao = ` → vendendo 1 unidade a mais, o faturamento cai cerca de ${fmt(Math.abs(v), 4)}`;

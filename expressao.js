@@ -62,7 +62,8 @@ const Expr = (function () {
             if (ch === "<" || ch === ">") { tokens.push({ t: "cmp", v: ch }); i++; continue; }
             if ("+-*/^()|;".includes(ch)) { tokens.push({ t: ch }); i++; continue; }
 
-            throw new ErroExpressao(`Caractere inválido: "${ch}"`);
+            // codePointAt pega o caractere inteiro (emojis ocupam duas posições na string)
+            throw new ErroExpressao(`Caractere inválido: "${String.fromCodePoint(s.codePointAt(i))}"`);
         }
         return tokens;
     }
@@ -76,6 +77,7 @@ const Expr = (function () {
             throw new ErroExpressao("Digite uma função.");
         }
         const tokens = tokenizar(String(texto));
+        if (tokens.length > 3000) throw new ErroExpressao("Expressão longa demais (máximo de 3000 símbolos).");
         let pos = 0;
         const ver = () => tokens[pos];
 
@@ -112,9 +114,24 @@ const Expr = (function () {
             return no;
         }
 
+        // Limita o "aninhamento" (parênteses, funções, potências encadeadas, sinais repetidos).
+        // Sem isso, entradas como "((((…" ou "x^x^x^…" com milhares de níveis travam o navegador.
+        let profundidade = 0;
+        function aninhar(fn) {
+            profundidade++;
+            try {
+                if (profundidade > 150) {
+                    throw new ErroExpressao("Expressão aninhada demais (use no máximo uns 100 níveis de parênteses, funções ou potências).");
+                }
+                return fn();
+            } finally {
+                profundidade--;
+            }
+        }
+
         function unario() {
-            if (ver() && ver().t === "-") { pos++; return { k: "neg", a: unario() }; }
-            if (ver() && ver().t === "+") { pos++; return unario(); }
+            if (ver() && ver().t === "-") { pos++; return { k: "neg", a: aninhar(unario) }; }
+            if (ver() && ver().t === "+") { pos++; return aninhar(unario); }
             return potencia();
         }
 
@@ -122,12 +139,16 @@ const Expr = (function () {
             const base = primario();
             if (ver() && ver().t === "^") {
                 pos++;
-                return { k: "^", a: base, b: unario() };
+                return { k: "^", a: base, b: aninhar(unario) };
             }
             return base;
         }
 
         function primario() {
+            return aninhar(primarioInterno);
+        }
+
+        function primarioInterno() {
             const tk = ver();
             if (!tk) throw new ErroExpressao("Expressão incompleta.");
             if (tk.t === "num") { pos++; return { k: "n", v: tk.v }; }
@@ -185,8 +206,12 @@ const Expr = (function () {
         const pecas = [peca()];
         while (ver() && ver().t === ";") {
             pos++;
-            if (!ver()) break;
+            if (!ver()) throw new ErroExpressao("Faltou a próxima parte depois do \";\" (ex: 10x se x < 100; 8x se x >= 100).");
             pecas.push(peca());
+        }
+        // Com mais de uma parte, cada uma (menos a última) precisa de uma condição "se"
+        if (pecas.length > 1 && pecas.slice(0, -1).some(p => p.conds.length === 0)) {
+            throw new ErroExpressao("Em funções por partes, use \"se\" em cada parte (ex: 10x se x < 100; 8x se x >= 100).");
         }
         if (pos < tokens.length) {
             throw new ErroExpressao("Expressão com símbolos sobrando. Confira os parênteses e operadores.");
